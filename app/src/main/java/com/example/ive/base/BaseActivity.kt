@@ -14,11 +14,12 @@ abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN )
         binding = DataBindingUtil.setContentView(this,getLayoutId())
-        hideStatusBar()
+        transparentStatusBar()
     }
 
-    protected fun hideStatusBar(){
+    protected fun transparentStatusBar(){
         WindowCompat.setDecorFitsSystemWindows(
             window,false
         )
@@ -30,5 +31,4 @@ abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
     protected fun showToast(@StringRes massage:Int){
         Toast.makeText(this,massage,Toast.LENGTH_SHORT).show()
     }
-
 }

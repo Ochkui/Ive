@@ -39,7 +39,6 @@ abstract class BaseFragment<T:ViewDataBinding>: Fragment() {
     }
 
     protected fun hideStatusBar(){
-//        WindowCompat.setDecorFitsSystemWindows()
     }
 
     protected fun navigate(id:Int) {
