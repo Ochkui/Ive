@@ -38,6 +38,10 @@ abstract class BaseFragment<T:ViewDataBinding>: Fragment() {
         Toast.makeText(context,massage, Toast.LENGTH_SHORT).show()
     }
 
+    protected fun showToast(massage:String){
+        Toast.makeText(context,massage, Toast.LENGTH_SHORT).show()
+    }
+
     protected fun hideStatusBar(){
     }
 

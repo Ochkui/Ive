@@ -14,9 +14,8 @@ abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN )
         binding = DataBindingUtil.setContentView(this,getLayoutId())
-        transparentStatusBar()
+//        transparentStatusBar()
     }
 
     protected fun transparentStatusBar(){

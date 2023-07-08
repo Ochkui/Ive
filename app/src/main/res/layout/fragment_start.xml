@@ -3,9 +3,69 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/red"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/btn_reg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_onboarding" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            style="@style/GeneralBl.TitleOnboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_general"
+            android:drawableStart="@drawable/ic_cube"
+            android:drawablePadding="@dimen/margin_general"
+            android:text="@string/photo"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_main"
+            app:layout_constraintEnd_toEndOf="@+id/iv_main"
+            app:layout_constraintStart_toStartOf="@+id/iv_main"
+            app:layout_constraintTop_toTopOf="@+id/iv_main" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            style="@style/ButtonWhite"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_marginStart="@dimen/margin_horizontal"
+            android:layout_marginEnd="@dimen/distance_between_button"
+            android:layout_marginBottom="@dimen/margin_vertical"
+            android:text="@string/log_in"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_reg"
+            app:layout_constraintStart_toStartOf="parent" />
+
+<!--        <com.example.registrationapp.customview.UserProfileView-->
+<!--            android:id="@+id/v_user_prof"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/margin_horizontal"-->
+<!--            android:layout_marginBottom="@dimen/margin_vertical"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/iv_main"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/iv_main"/>-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_reg"
+            style="@style/ButtonBlack"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_marginEnd="@dimen/margin_horizontal"
+            android:layout_marginBottom="@dimen/margin_vertical"
+            android:background="@drawable/bg_button_black"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
