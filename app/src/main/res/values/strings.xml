@@ -10,4 +10,6 @@
     <string name="example_mail">jane@example.com</string>
     <string name="enter_login_and_password">Enter login and password</string>
     <string name="invalid_email">Invalid email</string>
+    <string name="discover">Discover</string>
+    <string name="what_s_new_today">What’s new today</string>
 </resources>

@@ -33,6 +33,10 @@
         <item name="android:textSize">36sp</item>
     </style>
 
+    <style name="GeneralBl.TextRoboto.Normal">
+        <item name="android:textSize">11sp</item>
+    </style>
+
 <!--    button      -->
 
     <style name="ButtonBlack">
@@ -56,6 +60,13 @@
         <item name="android:textAppearance">@style/GeneralBl.TextRoboto</item>
         <item name="android:padding">17dp</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <!--    ImageView-->
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+
     </style>
 
 </resources>

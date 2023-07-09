@@ -45,14 +45,14 @@
             app:layout_constraintEnd_toStartOf="@+id/btn_reg"
             app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <com.example.registrationapp.customview.UserProfileView-->
-<!--            android:id="@+id/v_user_prof"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/margin_horizontal"-->
-<!--            android:layout_marginBottom="@dimen/margin_vertical"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/iv_main"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/iv_main"/>-->
+        <com.example.ive.component.UserProfileView
+            android:id="@+id/v_user_prof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal"
+            android:layout_marginBottom="@dimen/margin_vertical"
+            app:layout_constraintStart_toStartOf="@+id/iv_main"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_main"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_reg"

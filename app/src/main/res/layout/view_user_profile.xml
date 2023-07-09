@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="viewData"
+            type="com.example.ive.model.UserProfileViewData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/profile_icon_size"
+            android:layout_height="@dimen/profile_icon_size"
+
+            app:drawImage="@{viewData.image}"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedImageView"
+            tools:srcCompat="@drawable/profile_dev" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/GeneralBl.TextRoboto900"
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Pawel Czerwinski"
+            android:text="@{viewData.name}"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/GeneralBl.TextRoboto.Normal"
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:text="@{viewData.tag}"
+            android:layout_height="wrap_content"
+            tools:text="pawel_czerwinski"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -14,7 +14,8 @@ import androidx.navigation.Navigation
 abstract class BaseFragment<T:ViewDataBinding>: Fragment() {
 
     protected lateinit var binding:T
-    private lateinit var navController:NavController
+    private lateinit var navControllerOnboard:NavController
+//    private lateinit var navControllerDiscover:NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +30,7 @@ abstract class BaseFragment<T:ViewDataBinding>: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = Navigation.findNavController(view)
+        navControllerOnboard = Navigation.findNavController(view)
     }
 
     protected abstract fun getDataBinding(): T
@@ -46,7 +47,7 @@ abstract class BaseFragment<T:ViewDataBinding>: Fragment() {
     }
 
     protected fun navigate(id:Int) {
-        navController.navigate(id)
+        navControllerOnboard.navigate(id)
     }
 
     protected fun onBack(view:View){

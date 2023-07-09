@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_discover"
+            style="@style/GeneralBl.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin_to_title"
+            android:text="@string/discover"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_news"
+            style="@style/GeneralBl.TextRoboto.Normal"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin_to_title"
+            android:text="@string/what_s_new_today"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_discover" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
