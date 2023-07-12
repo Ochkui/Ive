@@ -1,68 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/custom_nav_bottom"
-    android:layout_width="match_parent"
-    android:layout_height="83dp">
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/custom_nav_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="83dp">
 
-    <androidx.appcompat.widget.AppCompatImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
 
-        android:id="@+id/ib_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginBottom="34dp"
-        android:background="@color/white"
-        android:src="@drawable/ic_home_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/ib_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="34dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_home_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ib_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:src="@drawable/ic_search_toolbar"
-        app:layout_constraintBottom_toBottomOf="@+id/ib_home"
-        app:layout_constraintEnd_toStartOf="@+id/ib_discover"
-        app:layout_constraintStart_toEndOf="@+id/ib_home"
-        app:layout_constraintTop_toTopOf="@+id/ib_home" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ib_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/ic_search_toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_home"
+            app:layout_constraintEnd_toStartOf="@+id/ib_discover"
+            app:layout_constraintStart_toEndOf="@+id/ib_home"
+            app:layout_constraintTop_toTopOf="@+id/ib_home" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ib_discover"
-        android:layout_width="wrap_content"
-        android:background="?android:attr/windowBackground"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_toolbar"
-        app:layout_constraintBottom_toBottomOf="@+id/ib_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ib_search" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ib_discover"
+            android:layout_width="wrap_content"
+            android:background="?android:attr/windowBackground"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ib_search" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ib_chats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        android:src="@drawable/ic_chat_toolbar"
-        app:layout_constraintBottom_toBottomOf="@+id/ib_search"
-        app:layout_constraintEnd_toStartOf="@+id/ib_profile"
-        app:layout_constraintStart_toEndOf="@+id/ib_discover"
-        app:layout_constraintTop_toTopOf="@+id/ib_search" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ib_chats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            android:src="@drawable/ic_chat_toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_search"
+            app:layout_constraintEnd_toStartOf="@+id/ib_profile"
+            app:layout_constraintStart_toEndOf="@+id/ib_discover"
+            app:layout_constraintTop_toTopOf="@+id/ib_search" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ib_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="11dp"
-        android:background="?android:attr/windowBackground"
-        android:src="@drawable/ic_profile_toolbar"
-        app:layout_constraintBottom_toBottomOf="@+id/ib_chats"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ib_chats" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ib_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="11dp"
+            android:background="?android:attr/windowBackground"
+            android:src="@drawable/ic_profile_toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/ib_chats"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ib_chats" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

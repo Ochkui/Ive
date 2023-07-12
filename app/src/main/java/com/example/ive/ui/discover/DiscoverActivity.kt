@@ -36,11 +36,11 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         navController = navHostFragment.navController
 
         with(binding) {
-            btHome = includeNavBar.findViewById(R.id.ib_home)
-            btSearch = includeNavBar.findViewById(R.id.ib_search)
-            btDiscover = includeNavBar.findViewById(R.id.ib_discover)
-            btChat = includeNavBar.findViewById(R.id.ib_chats)
-            btProfile = includeNavBar.findViewById(R.id.ib_profile)
+            btHome = includeNavBar.ibHome
+            btSearch = includeNavBar.ibSearch
+            btDiscover = includeNavBar.ibDiscover
+            btChat = includeNavBar.ibChats
+            btProfile = includeNavBar.ibProfile
         }
 
         buttonFlags = mutableMapOf(

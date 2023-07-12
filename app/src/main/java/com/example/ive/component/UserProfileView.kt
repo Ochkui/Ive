@@ -4,27 +4,30 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.ive.databinding.ViewUserProfileBinding
 import com.example.ive.component.model.UserProfileViewData
+import com.example.ive.databinding.ViewUserProfileBinding
 
 class UserProfileView(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int,
     desStyleRes: Int
-) : ConstraintLayout (context, attrs, defStyleAttr, desStyleRes) {
+) : ConstraintLayout(context, attrs, defStyleAttr, desStyleRes) {
 
-    private var binding:ViewUserProfileBinding
-    constructor(context: Context, attrs: AttributeSet?,defStyleAttr: Int): this(context,attrs,defStyleAttr,0)
-    constructor(context: Context, attrs: AttributeSet?): this(context,attrs,0)
-    constructor(context: Context): this(context,null)
+    private var binding: ViewUserProfileBinding =
+        ViewUserProfileBinding.inflate(LayoutInflater.from(context), this, true)
 
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
+        context,
+        attrs,
+        defStyleAttr,
+        0
+    )
 
-    init {
-        binding = ViewUserProfileBinding.inflate(LayoutInflater.from(context),this,true)
-    }
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context) : this(context, null)
 
-    fun setViewData(userProfile: UserProfileViewData){
+    fun setViewData(userProfile: UserProfileViewData) {
         binding.viewData = userProfile
     }
 }

@@ -8,7 +8,7 @@ class RegistrationFragment:BaseFragment<FragmentRegistrationBinding>() {
 
     override fun initListeners() {
         with(binding) {
-            ibBack.setOnClickListener { v -> onBack(v) }
+            ibBack.setOnClickListener { onBack() }
             btnNext.setOnClickListener { toast("To be continued") }
         }
     }

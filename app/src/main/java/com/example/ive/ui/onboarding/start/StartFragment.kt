@@ -22,8 +22,8 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     override fun initListeners() {
         with(binding) {
-            navigate(StartFragmentDirections.showLogin())
-            btnLogin.setOnClickListener { navigate(R.id.show_start) }
+//            navigate(StartFragmentDirections.showLogin())
+            btnLogin.setOnClickListener { navigate(R.id.show_login) }
             btnReg.setOnClickListener { navigate(R.id.show_registration) }
         }
     }

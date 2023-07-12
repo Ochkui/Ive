@@ -9,7 +9,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.ive.ui.discover.IProgressVisibility
 
@@ -61,8 +60,8 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         navControllerOnboard.navigate(directions)
     }
 
-    protected fun onBack(view: View) {
-        Navigation.findNavController(view).popBackStack()
+    protected fun onBack() {
+        navControllerOnboard.popBackStack()
     }
 
 }
