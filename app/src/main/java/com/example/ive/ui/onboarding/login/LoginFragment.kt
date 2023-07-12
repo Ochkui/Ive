@@ -7,22 +7,14 @@ import com.example.ive.base.BaseFragment
 import com.example.ive.databinding.FragmentLoginBinding
 import com.example.ive.ui.discover.DiscoverActivity
 
-class LoginFragment: BaseFragment<FragmentLoginBinding>() {
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupListeners()
-    }
-
-    private fun setupListeners() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+    override fun initListeners() {
         with(binding) {
             ibBack.setOnClickListener { v -> onBack(v) }
             btnLogin.setOnClickListener {
-                val intent = Intent(activity,DiscoverActivity::class.java)
+                val intent = Intent(activity, DiscoverActivity::class.java)
                 requireActivity().startActivity(intent)
             }
-
         }
     }
 

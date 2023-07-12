@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ive.databinding.ViewUserProfileBinding
-import com.example.ive.model.UserProfileViewData
+import com.example.ive.component.model.UserProfileViewData
 
 class UserProfileView(
     context: Context,
@@ -14,7 +14,7 @@ class UserProfileView(
     desStyleRes: Int
 ) : ConstraintLayout (context, attrs, defStyleAttr, desStyleRes) {
 
-    private lateinit var binding:ViewUserProfileBinding
+    private var binding:ViewUserProfileBinding
     constructor(context: Context, attrs: AttributeSet?,defStyleAttr: Int): this(context,attrs,defStyleAttr,0)
     constructor(context: Context, attrs: AttributeSet?): this(context,attrs,0)
     constructor(context: Context): this(context,null)

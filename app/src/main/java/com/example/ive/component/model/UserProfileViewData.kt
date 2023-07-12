@@ -1,4 +1,4 @@
-package com.example.ive.model
+package com.example.ive.component.model
 
 import androidx.annotation.DrawableRes
 

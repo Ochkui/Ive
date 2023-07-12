@@ -8,5 +8,17 @@
         tools:layout="@layout/fragment_discover"
         android:id="@+id/discoverFragment"
         android:name="com.example.ive.ui.discover.discover.DiscoverFragment"
-        android:label="DiscoverFragment" />
+        android:label="DiscoverFragment" >
+        <action
+            android:id="@+id/show_search"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.ive.ui.discover.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/show_discover"
+            app:destination="@id/discoverFragment" />
+    </fragment>
 </navigation>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="main_button_height">52dp</dimen>
     <dimen name="margin_horizontal">16dp</dimen>
     <dimen name="margin_vertical">20dp</dimen>
@@ -7,4 +7,5 @@
     <dimen name="margin_to_title">32dp</dimen>
     <dimen name="distance_between_button">9dp</dimen>
     <dimen name="profile_icon_size">28dp</dimen>
+
 </resources>
