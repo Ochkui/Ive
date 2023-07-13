@@ -7,7 +7,9 @@ import com.example.ive.R
 import com.example.ive.base.BaseFragment
 import com.example.ive.databinding.FragmentStartBinding
 import com.example.ive.component.model.UserProfileViewData
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     override fun initViews() {

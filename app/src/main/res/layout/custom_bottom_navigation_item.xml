@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/custom_nav_bottom"
         android:layout_width="match_parent"
         android:layout_height="83dp">
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
 
@@ -28,12 +38,12 @@
             android:background="@color/white"
             android:src="@drawable/ic_search_toolbar"
             app:layout_constraintBottom_toBottomOf="@+id/ib_home"
-            app:layout_constraintEnd_toStartOf="@+id/ib_discover"
+            app:layout_constraintEnd_toStartOf="@+id/ib_add"
             app:layout_constraintStart_toEndOf="@+id/ib_home"
             app:layout_constraintTop_toTopOf="@+id/ib_home" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_discover"
+            android:id="@+id/ib_add"
             android:layout_width="wrap_content"
             android:background="?android:attr/windowBackground"
             android:layout_height="wrap_content"
@@ -51,7 +61,7 @@
             android:src="@drawable/ic_chat_toolbar"
             app:layout_constraintBottom_toBottomOf="@+id/ib_search"
             app:layout_constraintEnd_toStartOf="@+id/ib_profile"
-            app:layout_constraintStart_toEndOf="@+id/ib_discover"
+            app:layout_constraintStart_toEndOf="@+id/ib_add"
             app:layout_constraintTop_toTopOf="@+id/ib_search" />
 
         <androidx.appcompat.widget.AppCompatImageButton

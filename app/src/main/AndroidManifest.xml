@@ -15,6 +15,7 @@
         tools:targetApi="31">
         <activity
             android:name=".OnboardingActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.discover.DiscoverActivity"/>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.discover.DiscoverActivity"/>
     </application>
 
 </manifest>

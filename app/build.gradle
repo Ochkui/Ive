@@ -5,7 +5,13 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id "kotlin-kapt"
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
+
+def apiKeysFail = rootProject.file("local.properties")
+def apiKeys = new Properties()
+apiKeys.load(new FileInputStream(apiKeysFail))
+
 
 android {
     namespace 'com.example.ive'
@@ -20,6 +26,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField("String", "BASE_URL", "\"https://api.unsplash.com\"")
+        buildConfigField("String", "AUTHENTICATION_URL", "\"https://unsplash.com/oauth\"")
+
+        buildConfigField("String", "ACCESS_KEY", apiKeys['ACCESS_KEY'])
+        buildConfigField("String", "SECRET_KEY", apiKeys['SECRET_KEY'])
 
     }
 
