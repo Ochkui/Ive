@@ -14,8 +14,9 @@ class BaseInterceptor:Interceptor,Authenticator {
     )
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        request.newBuilder()
+        var request = chain.request()
+
+        request = request.newBuilder()
             .addHeaders(baseHeaders)
             .build()
         return chain.proceed(request)
@@ -27,7 +28,7 @@ class BaseInterceptor:Interceptor,Authenticator {
     }
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        TODO("Not yet implemented")
+        TODO("check if needed")
     }
 
     companion object{

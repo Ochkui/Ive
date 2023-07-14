@@ -1,6 +1,7 @@
 package com.example.ive.di
 
 import com.example.ive.BuildConfig
+import com.example.ive.api.PhotoApi
 import com.example.ive.network.BaseInterceptor
 import dagger.Module
 import dagger.Provides
@@ -29,4 +30,11 @@ object NetworkModule {
         .addInterceptor(BaseInterceptor())
         .authenticator(BaseInterceptor())
         .build()
+
+    @Provides
+    @Singleton
+    fun providePhotoApi(retrofit: Retrofit): PhotoApi{
+        return retrofit.create(PhotoApi::class.java)
+    }
+
 }
