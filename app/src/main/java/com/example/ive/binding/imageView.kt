@@ -3,8 +3,11 @@ package com.example.ive.binding
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import com.squareup.picasso.Picasso
 
-@BindingAdapter("app:drawImage")
-fun drawImage(view:ImageView,@DrawableRes image:Int){
-    view.setImageResource(image)
+@BindingAdapter("app:imageUrls")
+fun loadImage(view:ImageView, imageUrls:String){
+    Picasso.get()
+        .load(imageUrls)
+        .into(view)
 }

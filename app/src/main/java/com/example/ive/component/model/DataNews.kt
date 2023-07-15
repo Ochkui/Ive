@@ -2,5 +2,6 @@ package com.example.ive.component.model
 
 data class DataNews(
     val user: UserProfileViewData,
-    val imageUrls: Int
+    val imageUrls: String?,
+    val photoId:String
 )

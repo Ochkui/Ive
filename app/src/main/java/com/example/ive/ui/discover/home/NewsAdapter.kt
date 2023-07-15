@@ -3,9 +3,11 @@ package com.example.ive.ui.discover.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ive.R
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.RecyclerHorizontalItemBinding
+import com.squareup.picasso.Picasso
 
 class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
@@ -13,7 +15,9 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: RecyclerHorizontalItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(listItem: DataNews){
-            binding.aiImage.setImageResource(listItem.imageUrls)
+            Picasso.get()
+                .load(listItem.imageUrls)
+                .into(binding.aiImage)
             binding.vUserProf.setViewData(listItem.user)
         }
     }

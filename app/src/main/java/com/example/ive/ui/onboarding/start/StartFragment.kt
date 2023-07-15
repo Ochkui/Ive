@@ -13,13 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     override fun initViews() {
-        binding.vUserProf.setViewData(
-            UserProfileViewData(
-                R.drawable.profile_dev,
-                "Mails",
-                "developer"
-            )
-        )
+//        binding.vUserProf.setViewData(
+//            UserProfileViewData(
+//                R.drawable.profile_dev,
+//                "Mails",
+//                "developer"
+//            )
+//        )
     }
 
     override fun initListeners() {

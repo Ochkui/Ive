@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.RecayclerVerticalPhotoBinding
+import com.squareup.picasso.Picasso
 
 class PhotoAdapter(
 ) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>() {
@@ -16,7 +17,10 @@ class PhotoAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: DataNews) {
-            binding.aiImage.setImageResource(item.imageUrls)
+            Picasso.get()
+                .load(item.imageUrls)
+                .into(binding.aiImage)
+//            binding.aiImage.setImageResource(item.imageUrls)
         }
     }
 

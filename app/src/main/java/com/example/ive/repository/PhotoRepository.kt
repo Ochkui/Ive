@@ -11,5 +11,8 @@ class PhotoRepository @Inject constructor(
     private val api:PhotoApi
 ):BaseRepository(){
 
-    suspend fun getPhotos(): ApiResponse<List<PhotoData>> = request{ api.getPhoto() }
+    suspend fun getPhotos(): ApiResponse<List<PhotoData>> {
+        return request { api.getPhoto() }
+    }
+
 }

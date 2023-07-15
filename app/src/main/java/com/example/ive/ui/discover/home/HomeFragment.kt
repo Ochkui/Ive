@@ -1,5 +1,6 @@
 package com.example.ive.ui.discover.home
 
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initViews() {
+        val stLayoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+//        stLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
 
         with(binding) {
 
@@ -31,8 +34,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             rvListPhoto.isNestedScrollingEnabled = false
             rvListItem.adapter = adapterNews
-            rvListPhoto.layoutManager =
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            rvListPhoto.setHasFixedSize(false)
+            rvListPhoto.layoutManager = stLayoutManager
             rvListPhoto.adapter = adapterPhoto
         }
     }

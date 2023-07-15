@@ -22,7 +22,6 @@ class HomeViewModel @Inject constructor(
     var listError = MutableLiveData<String>()
 
     init {
-
         getPhoto()
     }
 

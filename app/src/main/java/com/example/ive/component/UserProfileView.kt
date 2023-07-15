@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.Glide
 import com.example.ive.component.model.UserProfileViewData
 import com.example.ive.databinding.ViewUserProfileBinding
+import com.squareup.picasso.Picasso
 
 class UserProfileView(
     context: Context,
