@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.ive.R
-import com.example.ive.base.BaseActivity
+import com.example.ive.ui.base.BaseActivity
 import com.example.ive.databinding.DiscaverActivityBinding
 import com.example.ive.exstensions.toast
 import com.example.ive.utils.animationScale

@@ -1,12 +1,12 @@
 package com.example.ive.ui.onboarding.registration
 
-import com.example.ive.base.BaseFragment
+import com.example.ive.ui.base.BaseFragment
 import com.example.ive.databinding.FragmentRegistrationBinding
 import com.example.ive.exstensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationFragment:BaseFragment<FragmentRegistrationBinding>() {
+class RegistrationFragment: BaseFragment<FragmentRegistrationBinding>() {
 
     override fun initListeners() {
         with(binding) {

@@ -3,22 +3,24 @@ package com.example.ive.ui.discover.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.ive.R
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.RecyclerHorizontalItemBinding
+import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
-class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class NewsAdapter(val listener:OnclickListeners<DataNews> ): RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     private val listItem = mutableListOf<DataNews>()
 
     class ViewHolder(val binding: RecyclerHorizontalItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(listItem: DataNews){
+        fun bind(listItem: DataNews, listener: OnclickListeners<DataNews>){
             Picasso.get()
                 .load(listItem.imageUrls)
                 .into(binding.aiImage)
             binding.vUserProf.setViewData(listItem.user)
+            binding.aiImage.setOnClickListener {
+                listener.onClick(listItem)
+            }
         }
     }
 
@@ -38,6 +40,6 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listItem[position])
+        holder.bind(listItem[position],listener)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.ive.base
+package com.example.ive.ui.base
 
 import android.os.Bundle
 import android.view.GestureDetector

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import com.example.ive.R
-import com.example.ive.base.BaseFragment
+import com.example.ive.ui.base.BaseFragment
 import com.example.ive.databinding.FragmentStartBinding
 import com.example.ive.component.model.UserProfileViewData
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,6 +1,7 @@
 package com.example.ive.component
 
 import android.content.Context
+import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -31,5 +32,12 @@ class UserProfileView(
 
     fun setViewData(userProfile: UserProfileViewData) {
         binding.viewData = userProfile
+    }
+
+    fun setTextColor(@ColorInt color: Int){
+        with(binding) {
+            tvName.setTextColor(color)
+            tvTag.setTextColor(color)
+        }
     }
 }

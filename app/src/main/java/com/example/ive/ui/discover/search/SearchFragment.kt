@@ -1,6 +1,6 @@
 package com.example.ive.ui.discover.search
 
-import com.example.ive.base.BaseFragment
+import com.example.ive.ui.base.BaseFragment
 import com.example.ive.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,6 +1,7 @@
 package com.example.ive.network.model
 
 import android.os.Parcelable
+import android.provider.ContactsContract.Data
 import com.example.ive.component.model.DataNews
 import com.example.ive.component.model.UserProfileViewData
 import com.google.gson.annotations.SerializedName

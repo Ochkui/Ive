@@ -1,8 +1,10 @@
 package com.example.ive.ui.onboarding.login
 
 import android.content.Intent
-import com.example.ive.base.BaseFragment
+import com.example.ive.OnboardingActivity
+import com.example.ive.ui.base.BaseFragment
 import com.example.ive.databinding.FragmentLoginBinding
+import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.discover.DiscoverActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -12,8 +14,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         with(binding) {
             ibBack.setOnClickListener { onBack() }
             btnLogin.setOnClickListener {
-                val intent = Intent(activity, DiscoverActivity::class.java)
-                requireActivity().startActivity(intent)
+                navigateTo(DiscoverActivity::class.java)
+                requireActivity().finish()
             }
         }
     }

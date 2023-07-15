@@ -1,14 +1,19 @@
-package com.example.ive.base
+package com.example.ive.ui.base
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.ive.ui.discover.IProgressVisibility
 
@@ -54,6 +59,16 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     protected fun navigate(id: Int) {
         navControllerOnboard.navigate(id)
+    }
+
+    protected fun <T : AppCompatActivity> navigateTo(clazz: Class<T>, bundle:Bundle = bundleOf()){
+
+        val destination = ActivityNavigator(requireContext())
+            .createDestination()
+            .setIntent(Intent(requireContext(),clazz))
+
+        ActivityNavigator(requireContext())
+            .navigate(destination,bundle,null,null)
     }
 
     protected fun navigate(directions: NavDirections) {
