@@ -1,5 +1,6 @@
 package com.example.ive.ui.discover.home
 
+import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +14,8 @@ import com.example.ive.exstensions.toast
 import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
+import com.example.ive.ui.discover.IProgressVisibility
+import com.example.ive.ui.discover.OnSwipeRefreshListener
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,19 +43,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     })
 
+    private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
+
     override fun initObservers() {
-        super.initObservers()
         viewModel.listPhoto.observe(viewLifecycleOwner, Observer {
             adapterNews.submitList(it)
             adapterPhoto.submitList(it)
+            iProgressBar.visibleProgress(false)
+            binding.swRefresh.isRefreshing = false
         })
     }
 
     override fun initViews() {
-        val stLayoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+
+        iProgressBar.visibleProgress(true)
+        val stLayoutManager = StaggeredGridLayoutManager(
+            2,StaggeredGridLayoutManager.VERTICAL)
 
         with(binding) {
-
             rvListItem.layoutManager = LinearLayoutManager(
                 requireContext(), LinearLayoutManager.HORIZONTAL, false)
             rvListPhoto.isNestedScrollingEnabled = false
@@ -64,8 +72,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initListeners() {
+        binding.swRefresh.setOnRefreshListener {
+            viewModel.getPhoto()
+        }
 //        binding.consLayout.setOnClickListener { progressVisibility.visibleProgress(true) }
     }
 
     override fun getDataBinding() = FragmentHomeBinding.inflate(layoutInflater)
+
 }

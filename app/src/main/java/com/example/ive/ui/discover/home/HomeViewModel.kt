@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
         getPhoto()
     }
 
-    private fun getPhoto(){
+    fun getPhoto(){
         viewModelScope.launch{
             when (val result = photoRepository.getPhotos()) {
                 is ApiResponse.Error -> listError.postValue(result.error)

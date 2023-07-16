@@ -14,6 +14,7 @@ import com.example.ive.network.model.toDataNews
 import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.adapter.PhotoUserGalleryAdapter
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +23,8 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
 
     private lateinit var user:UserProfileViewData
     private val viewModel: ProfileViewModel by viewModels()
+    private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
+
 
     private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery>{
         override fun onClick(item: PhotoGallery, number: Int) {
@@ -45,6 +48,8 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
         viewModel.listPhoto.observe(viewLifecycleOwner) {
             if (it != null) {
                 adapterPhoto.submitList(it)
+                iProgressBar.visibleProgress(false)
+                binding.swRefresh.isRefreshing = false
             }
         }
         viewModel.listError.observe(viewLifecycleOwner){
@@ -53,8 +58,12 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
     }
 
     override fun initViews() {
+        iProgressBar.visibleProgress(true)
         user.tag?.let {
             viewModel.getGalleries(it)
+            binding.swRefresh.setOnRefreshListener {
+                viewModel.getGalleries(it)
+            }
         }?: run {
             goBack()
             toast("Not found")

@@ -1,11 +1,9 @@
 package com.example.ive.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.compose.ui.res.colorResource
 import androidx.core.content.ContextCompat
+import androidx.core.view.GestureDetectorCompat
 import com.example.ive.R
-import com.example.ive.binding.loadImage
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.PhotoActivityBinding
 import com.example.ive.exstensions.hideStatusBar
