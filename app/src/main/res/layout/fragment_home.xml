@@ -15,7 +15,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_discover"
+                android:id="@+id/tv_name"
                 style="@style/GeneralBl.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_news"
+                android:id="@+id/tv_city"
                 style="@style/GeneralBl.TextRoboto.Normal"
                 android:textStyle="bold"
                 android:textAllCaps="true"
@@ -37,7 +37,7 @@
                 android:layout_marginTop="@dimen/margin_to_title"
                 android:text="@string/what_s_new_today"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_discover" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
             <androidx.recyclerview.widget.RecyclerView
                 tools:layout="@layout/recycler_horizontal_item"
@@ -48,7 +48,7 @@
                 android:paddingTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_news" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_city" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_browse_all"
@@ -76,7 +76,6 @@
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/ButtonWhite"
                 android:text="@string/see_more"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginStart="@dimen/margin_horizontal"

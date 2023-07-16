@@ -44,6 +44,7 @@
         <item name="android:textAppearance">@style/GeneralWh.TextRoboto900</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ButtonWhite">
@@ -51,6 +52,7 @@
         <item name="android:textAppearance">@style/GeneralBl.TextRoboto900</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 <!--    edit text   -->

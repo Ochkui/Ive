@@ -1,31 +1,34 @@
-package com.example.ive.ui.discover.home
+package com.example.ive.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.RecyclerVerticalPhotoBinding
+import com.example.ive.network.model.PhotoGallery
+import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
-class PhotoAdapter(
-) : RecyclerView.Adapter<PhotoAdapter.ViewHolder>() {
+class PhotoUserGalleryAdapter(
+    val listeners: OnclickListeners<PhotoGallery>
+) : RecyclerView.Adapter<PhotoUserGalleryAdapter.ViewHolder>() {
 
-    private val listPhoto = mutableListOf<DataNews>()
+    private val listPhoto = mutableListOf<PhotoGallery>()
 
     class ViewHolder(
         val binding: RecyclerVerticalPhotoBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: DataNews) {
+        fun bind(item: PhotoGallery, listener: OnclickListeners<PhotoGallery>) {
             Picasso.get()
-                .load(item.imageUrls)
+                .load(item.cover_photo.urls?.regular)
                 .into(binding.aiImage)
-
-//            binding.aiImage.setImageResource(item.imageUrls)
+            binding.aiImage.setOnClickListener { listener.onClick(item,1) }
         }
+
     }
 
-    fun submitList(list: List<DataNews>) {
+    fun submitList(list: List<PhotoGallery>) {
         listPhoto.addAll(list)
         notifyDataSetChanged()
     }
@@ -36,9 +39,10 @@ class PhotoAdapter(
         return ViewHolder(binding)
     }
 
+    override fun getItemCount() = listPhoto.size
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listPhoto[position])
+        holder.bind(listPhoto[position],listeners)
     }
 
-    override fun getItemCount() = listPhoto.size
 }

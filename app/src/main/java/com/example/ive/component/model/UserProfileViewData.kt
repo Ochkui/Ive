@@ -8,5 +8,6 @@ import kotlinx.android.parcel.Parcelize
 data class UserProfileViewData (
     var image:String?,
     var name:String?,
-    var tag:String?
+    var tag:String?,
+    var location:String?
 ): Parcelable

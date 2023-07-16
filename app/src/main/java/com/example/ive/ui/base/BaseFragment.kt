@@ -13,16 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.ive.ui.discover.IProgressVisibility
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     protected lateinit var binding: T
-    private val navControllerOnboard: NavController by lazy { findNavController() }
+    private val navController: NavController by lazy { findNavController() }
 
-    protected lateinit var progressVisibility: IProgressVisibility
+    private lateinit var progressVisibility: IProgressVisibility
     override fun onAttach(context: Context) {
         super.onAttach(context)
         progressVisibility = context as IProgressVisibility
@@ -57,9 +56,14 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     protected fun hideStatusBar() {
     }
 
-    protected fun navigate(id: Int) {
-        navControllerOnboard.navigate(id)
+    protected fun navigate(id: Int, bundle: Bundle = bundleOf()) {
+        navController.navigate(id,bundle)
     }
+
+    protected fun goBack(){
+        navController.popBackStack()
+    }
+
 
     protected fun <T : AppCompatActivity> navigateTo(clazz: Class<T>, bundle:Bundle = bundleOf()){
 
@@ -72,11 +76,11 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     }
 
     protected fun navigate(directions: NavDirections) {
-        navControllerOnboard.navigate(directions)
+        navController.navigate(directions)
     }
 
     protected fun onBack() {
-        navControllerOnboard.popBackStack()
+        navController.popBackStack()
     }
 
 }

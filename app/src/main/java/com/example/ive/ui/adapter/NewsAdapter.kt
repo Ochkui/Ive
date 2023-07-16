@@ -1,4 +1,4 @@
-package com.example.ive.ui.discover.home
+package com.example.ive.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,8 +18,12 @@ class NewsAdapter(val listener:OnclickListeners<DataNews> ): RecyclerView.Adapte
                 .load(listItem.imageUrls)
                 .into(binding.aiImage)
             binding.vUserProf.setViewData(listItem.user)
+
             binding.aiImage.setOnClickListener {
-                listener.onClick(listItem)
+                listener.onClick(listItem,1)
+            }
+            binding.vUserProf.setOnClickListener {
+                listener.onClick(listItem,2)
             }
         }
     }
