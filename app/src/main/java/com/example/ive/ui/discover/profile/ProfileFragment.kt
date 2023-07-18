@@ -11,25 +11,26 @@ import com.example.ive.exstensions.getParcel
 import com.example.ive.exstensions.toast
 import com.example.ive.network.model.PhotoGallery
 import com.example.ive.network.model.toDataNews
-import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.adapter.PhotoUserGalleryAdapter
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.INavigationBarVisibility
 import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
-    private lateinit var user:UserProfileViewData
+    private lateinit var user: UserProfileViewData
     private val viewModel: ProfileViewModel by viewModels()
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
+    private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
 
 
-    private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery>{
+    private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery> {
         override fun onClick(item: PhotoGallery, number: Int) {
             val data = item.toDataNews()
-            navigateTo(PhotoActivity::class.java, bundleOf ("data" to data))
+            navigate(R.id.photoFragment, bundleOf("data" to data))
         }
     })
 
@@ -52,7 +53,7 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
                 binding.swRefresh.isRefreshing = false
             }
         }
-        viewModel.listError.observe(viewLifecycleOwner){
+        viewModel.listError.observe(viewLifecycleOwner) {
             val text = (it)
         }
     }
@@ -64,7 +65,7 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
             binding.swRefresh.setOnRefreshListener {
                 viewModel.getGalleries(it)
             }
-        }?: run {
+        } ?: run {
             goBack()
             toast("Not found")
         }
@@ -73,14 +74,16 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>() {
 
             btFollowTo.text = resources.getString(R.string.follow, user.name)
             viewData = user
-            rvGallery.layoutManager =  StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            rvGallery.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             rvGallery.isNestedScrollingEnabled = false
             rvGallery.adapter = adapterPhoto
         }
     }
+
     override fun getDataBinding() = FragmentProfileBinding.inflate(layoutInflater)
 
-    companion object{
+    companion object {
         const val KEY_DATA = "data"
     }
 }

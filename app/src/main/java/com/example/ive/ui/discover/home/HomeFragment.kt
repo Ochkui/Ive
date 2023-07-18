@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.R
 import com.example.ive.component.model.DataNews
-import com.example.ive.ui.base.BaseFragment
 import com.example.ive.databinding.FragmentHomeBinding
-import com.example.ive.exstensions.toast
-import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
+import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +22,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val adapterPhoto = PhotoAdapter(object : OnclickListeners<DataNews> {
         override fun onClick(item: DataNews, number: Int) {
-//            navigateTo(PhotoActivity::class.java, bundleOf("data" to item))
             navigate(R.id.photoFragment, bundleOf("data" to item))
         }
 
@@ -34,11 +31,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         override fun onClick(item: DataNews, number: Int) {
 
             if (number == 1) {
-                navigateTo(PhotoActivity::class.java, bundleOf("data" to item))
+                navigate(R.id.photoFragment, bundleOf("data" to item))
             } else {
                 navigate(R.id.profileFragment, bundleOf("data" to item.user))
             }
-            toast("Click")
         }
     })
 

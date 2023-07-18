@@ -57,22 +57,22 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     }
 
     protected fun navigate(id: Int, bundle: Bundle = bundleOf()) {
-        navController.navigate(id,bundle)
+        navController.navigate(id, bundle)
     }
 
-    protected fun goBack(){
+    protected fun goBack() {
         navController.popBackStack()
     }
 
 
-    protected fun <T : AppCompatActivity> navigateTo(clazz: Class<T>, bundle:Bundle = bundleOf()){
+    protected fun <T : AppCompatActivity> navigateTo(clazz: Class<T>, bundle: Bundle = bundleOf()) {
 
         val destination = ActivityNavigator(requireContext())
             .createDestination()
-            .setIntent(Intent(requireContext(),clazz))
+            .setIntent(Intent(requireContext(), clazz))
 
         ActivityNavigator(requireContext())
-            .navigate(destination,bundle,null,null)
+            .navigate(destination, bundle, null, null)
     }
 
     protected fun navigate(directions: NavDirections) {

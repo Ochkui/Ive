@@ -1,17 +1,18 @@
 package com.example.ive.ui.discover
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.ive.R
-import com.example.ive.binding.setVisibility
-import com.example.ive.ui.base.BaseActivity
 import com.example.ive.databinding.DiscaverActivityBinding
 import com.example.ive.exstensions.toast
+import com.example.ive.ui.base.BaseActivity
 import com.example.ive.utils.animationScale
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,INavigationBarVisibility {
@@ -23,13 +24,32 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     private lateinit var btAdd: ImageButton
     private lateinit var btChat: ImageButton
     private lateinit var btProfile: ImageButton
-    private lateinit var buttonFlags: MutableMap<Int, Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        hideSystemUI()
         initView()
         initListeners()
+    }
+
+    private fun hideSystemUI() {
+
+        window.decorView.setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE
+        )
+    }
+
+    private fun showSystemUI() {
+        window.decorView.setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        )
     }
 
     private fun initView() {
@@ -46,25 +66,18 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
             btProfile = includeNavBar.ibProfile
         }
 
-        buttonFlags = mutableMapOf(
-            R.id.ib_home to true,
-            R.id.ib_search to false,
-            R.id.ib_add to false,
-            R.id.ib_chats to false,
-            R.id.ib_profile to false
-        )
     }
 
     private fun initListeners() {
 
         btHome.setOnClickListener {
             animationScale(it, this@DiscoverActivity)
-            if (!navigate(R.id.discoverFragment, it.id)) toast("Home")
+            navigate(R.id.discoverFragment)
         }
 
         btSearch.setOnClickListener {
             animationScale(it, this@DiscoverActivity)
-            if (!navigate(R.id.searchFragment, it.id)) toast("Search")
+            navigate(R.id.searchFragment)
         }
 
         btAdd.setOnClickListener {
@@ -94,21 +107,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     private fun navigate(id: Int) {
         navController.navigate(id)
-    }
-
-    private fun navigate(showId: Int, resId: Int): Boolean {
-        return if (buttonFlags[resId] == false) {
-            resetButtonFlags(resId)
-            navController.navigate(showId)
-            true
-        } else {
-            false
-        }
-    }
-
-    private fun resetButtonFlags(id: Int) {
-        buttonFlags.replaceAll { _, _ -> false }
-        buttonFlags[id] = true
     }
 
 }

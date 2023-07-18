@@ -16,6 +16,7 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
     private var photo: DataNews? = null
 
     override fun initViews() {
+        hideStatusBar()
         visibilityNavBar.navigationBarVisibility(false)
         photo = getParcel("data")
 
@@ -35,8 +36,14 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
         }
 
         binding.vUserProf.setOnClickListener {
+            visibilityNavBar.navigationBarVisibility(true)
             navigate(R.id.profileFragment, bundleOf("data" to photo?.user))
         }
+    }
+
+    override fun onStop() {
+        visibilityNavBar.navigationBarVisibility(true)
+        super.onStop()
     }
 
     override fun getDataBinding() = FragmentPhotoBinding.inflate(layoutInflater)

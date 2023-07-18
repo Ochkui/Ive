@@ -10,19 +10,16 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ive.component.model.DataNews
-import com.example.ive.ui.base.BaseFragment
+import com.example.ive.R
 import com.example.ive.databinding.FragmentSearchBinding
 import com.example.ive.exstensions.toast
 import com.example.ive.network.model.PhotoData
 import com.example.ive.network.model.toDataNews
-import com.example.ive.ui.PhotoActivity
-import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.adapter.SearchPhotoAdapter
+import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.INavigationBarVisibility
 import com.example.ive.ui.discover.IProgressVisibility
-import com.example.ive.ui.discover.home.HomeViewModel
 import com.example.ive.ui.listeners.OnclickListeners
-import com.google.android.material.internal.ViewUtils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,17 +29,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val adapterPhoto = SearchPhotoAdapter(object : OnclickListeners<PhotoData> {
         override fun onClick(item: PhotoData, number: Int) {
-            navigateTo(PhotoActivity::class.java, bundleOf("data" to item.toDataNews()))
+            navigate(R.id.photoFragment, bundleOf("data" to item.toDataNews()))
         }
     })
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
+    private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
 
     override fun initViews() {
 
@@ -65,7 +57,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             iProgressBar.visibleProgress(false)
         }
 
-        viewModel.error.observe(viewLifecycleOwner){
+        viewModel.error.observe(viewLifecycleOwner) {
             Log.i("Search", it)
             binding.etSearch.setText(it)
             toast(it)
@@ -86,6 +78,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         }
 
     }
+
     private fun hideKeyboard(view: View) {
         val inputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

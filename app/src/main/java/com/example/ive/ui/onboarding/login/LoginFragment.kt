@@ -1,10 +1,7 @@
 package com.example.ive.ui.onboarding.login
 
-import android.content.Intent
-import com.example.ive.OnboardingActivity
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.databinding.FragmentLoginBinding
-import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.discover.DiscoverActivity
 import dagger.hilt.android.AndroidEntryPoint
 
