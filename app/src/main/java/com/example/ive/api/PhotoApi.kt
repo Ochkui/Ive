@@ -2,6 +2,7 @@ package com.example.ive.api
 
 import androidx.annotation.IntRange
 import com.example.ive.network.model.PhotoData
+import com.example.ive.network.model.PhotoDataList
 import com.example.ive.network.model.PhotoGallery
 import retrofit2.Response
 import retrofit2.http.GET
@@ -20,7 +21,13 @@ interface PhotoApi {
     @GET("users/{username}/collections")
     suspend fun getGallery(@Path("username") username:String): Response<List<PhotoGallery>>
 
+    @GET(SEARCH_PHOTO)
+    suspend fun getSearchPhoto(@Query(QUERY) query: String, @Query(PAGE) perPage:Int = 30) : Response<PhotoDataList>
+
     companion object {
+        const val SEARCH_PHOTO = "search/photos"
+        const val QUERY = "query"
+        const val PAGE = "per_page"
         const val GET_PHOTOS = "/photos"
         const val DEFAULT_PAGE_SIZE = 10
         const val MAX_PAGE_SIZE = 10

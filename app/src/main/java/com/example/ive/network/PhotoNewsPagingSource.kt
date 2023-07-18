@@ -20,7 +20,7 @@ class PhotoNewsPagingSource @Inject constructor(
             val response = photoApi.getPhoto(page = currentPage)
             val data = response.body()!!
             val responseData = mutableListOf<PhotoData>()
-            responseData.addAll(data)
+//            responseData.addAll(data)
 
             LoadResult.Page(
                 data = responseData,

@@ -1,7 +1,6 @@
 package com.example.ive.network.model
 
 import android.os.Parcelable
-import android.provider.ContactsContract.Data
 import com.example.ive.component.model.DataNews
 import com.example.ive.component.model.UserProfileViewData
 import com.google.gson.annotations.SerializedName
@@ -14,6 +13,11 @@ class PhotoData(
     val user: User,
     val location: String?
 
+) : Parcelable
+
+@Parcelize
+class PhotoDataList(
+    @SerializedName("results") var list:MutableList<PhotoData>
 ) : Parcelable
 
 @Parcelize
@@ -69,6 +73,13 @@ fun PhotoData.toDataNews() = DataNews(
     photoId = id,
     location = location
 )
+
+//fun PhotoDataList.toDataNews() = DataNews(
+//    user = UserProfileViewData(list.user.profileImage?.large, list.user.name, list.user.username, list.user.location),
+//    imageUrls = list.urls.regular,
+//    photoId = list.id,
+//    location = list.location
+//)
 
 fun PhotoGallery.toDataNews() = DataNews(
     user = UserProfileViewData(user.profileImage?.large,user.name,user.username,user.location),

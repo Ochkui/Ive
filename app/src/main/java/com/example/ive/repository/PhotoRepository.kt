@@ -5,6 +5,7 @@ import com.example.ive.api.PhotoApi
 import com.example.ive.network.ApiResponse
 import com.example.ive.network.BaseRepository
 import com.example.ive.network.model.PhotoData
+import com.example.ive.network.model.PhotoDataList
 import com.example.ive.network.model.PhotoGallery
 import javax.inject.Inject
 
@@ -18,6 +19,10 @@ class PhotoRepository @Inject constructor(
 
     suspend fun getGalleries(username: String):ApiResponse<List<PhotoGallery>>{
         return request { api.getGallery(username) }
+    }
+
+    suspend fun getSearchPhoto(query:String): ApiResponse<PhotoDataList> {
+        return request { api.getSearchPhoto(query) }
     }
 
 }

@@ -9,21 +9,22 @@
         android:id="@+id/discoverFragment"
         android:name="com.example.ive.ui.discover.home.HomeFragment"
         android:label="DiscoverFragment" >
-        <action
-            android:id="@+id/show_search"
-            app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/show_profile"
-            app:destination="@id/profileFragment" />
+<!--        <action-->
+<!--            android:id="@+id/show_search"-->
+<!--            app:destination="@id/searchFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/show_profile"-->
+<!--            app:destination="@id/profileFragment" />-->
     </fragment>
 
     <fragment
+        tools:layout="@layout/fragment_search"
         android:id="@+id/searchFragment"
         android:name="com.example.ive.ui.discover.search.SearchFragment"
         android:label="SearchFragment" >
-        <action
-            android:id="@+id/show_home"
-            app:destination="@id/discoverFragment" />
+<!--        <action-->
+<!--            android:id="@+id/show_home"-->
+<!--            app:destination="@id/discoverFragment" />-->
     </fragment>
 
     <fragment
@@ -35,12 +36,17 @@
         <argument
             android:name="user"
             app:argType="com.example.ive.component.model.UserProfileViewData"/>
-        <action
-            android:id="@+id/show_home"
-            app:destination="@id/discoverFragment" />
-        <action
-            android:id="@+id/show_search"
-            app:destination="@id/searchFragment" />
+<!--        <action-->
+<!--            android:id="@+id/show_home"-->
+<!--            app:destination="@id/discoverFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/show_search"-->
+<!--            app:destination="@id/searchFragment" />-->
     </fragment>
+    <fragment
+        tools:layout="@layout/fragment_photo"
+        android:id="@+id/photoFragment"
+        android:name="com.example.ive.ui.discover.photo.PhotoFragment"
+        android:label="PhotoFragment" />
 
 </navigation>

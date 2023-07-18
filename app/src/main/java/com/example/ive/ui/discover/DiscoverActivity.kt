@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.ive.R
+import com.example.ive.binding.setVisibility
 import com.example.ive.ui.base.BaseActivity
 import com.example.ive.databinding.DiscaverActivityBinding
 import com.example.ive.exstensions.toast
@@ -13,7 +14,7 @@ import com.example.ive.utils.animationScale
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility {
+class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,INavigationBarVisibility {
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -58,12 +59,12 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
         btHome.setOnClickListener {
             animationScale(it, this@DiscoverActivity)
-            if (!navigate(R.id.show_home, it.id)) toast("Home")
+            if (!navigate(R.id.discoverFragment, it.id)) toast("Home")
         }
 
         btSearch.setOnClickListener {
             animationScale(it, this@DiscoverActivity)
-            if (!navigate(R.id.show_search, it.id)) toast("Search")
+            if (!navigate(R.id.searchFragment, it.id)) toast("Search")
         }
 
         btAdd.setOnClickListener {
@@ -85,6 +86,10 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     override fun getLayoutId() = R.layout.discaver_activity
     override fun visibleProgress(isVisible: Boolean) {
         binding.progress.isVisible = isVisible
+    }
+
+    override fun navigationBarVisibility(isVisibility: Boolean) {
+        binding.isNavBarVisible = isVisibility
     }
 
     private fun navigate(id: Int) {

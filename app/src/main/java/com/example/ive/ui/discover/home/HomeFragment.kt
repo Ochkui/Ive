@@ -1,6 +1,5 @@
 package com.example.ive.ui.discover.home
 
-import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,7 +14,6 @@ import com.example.ive.ui.PhotoActivity
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.discover.IProgressVisibility
-import com.example.ive.ui.discover.OnSwipeRefreshListener
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,20 +22,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val adapterPhoto = PhotoAdapter(object : OnclickListeners<DataNews>{
+    private val adapterPhoto = PhotoAdapter(object : OnclickListeners<DataNews> {
         override fun onClick(item: DataNews, number: Int) {
-            navigateTo(PhotoActivity::class.java,bundleOf ("data" to item))
+//            navigateTo(PhotoActivity::class.java, bundleOf("data" to item))
+            navigate(R.id.photoFragment, bundleOf("data" to item))
         }
 
     })
 
-    private val adapterNews = NewsAdapter(object : OnclickListeners<DataNews>{
+    private val adapterNews = NewsAdapter(object : OnclickListeners<DataNews> {
         override fun onClick(item: DataNews, number: Int) {
 
-            if (number == 1){
-                navigateTo(PhotoActivity::class.java,bundleOf ("data" to item))
+            if (number == 1) {
+                navigateTo(PhotoActivity::class.java, bundleOf("data" to item))
             } else {
-                navigate(R.id.show_profile, bundleOf ("data" to item.user))
+                navigate(R.id.profileFragment, bundleOf("data" to item.user))
             }
             toast("Click")
         }
@@ -58,11 +57,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         iProgressBar.visibleProgress(true)
         val stLayoutManager = StaggeredGridLayoutManager(
-            2,StaggeredGridLayoutManager.VERTICAL)
+            2, StaggeredGridLayoutManager.VERTICAL
+        )
 
         with(binding) {
             rvListItem.layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                requireContext(), LinearLayoutManager.HORIZONTAL, false
+            )
             rvListPhoto.isNestedScrollingEnabled = false
             rvListItem.adapter = adapterNews
             rvListPhoto.setHasFixedSize(false)
@@ -75,7 +76,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.swRefresh.setOnRefreshListener {
             viewModel.getPhoto()
         }
-//        binding.consLayout.setOnClickListener { progressVisibility.visibleProgress(true) }
     }
 
     override fun getDataBinding() = FragmentHomeBinding.inflate(layoutInflater)

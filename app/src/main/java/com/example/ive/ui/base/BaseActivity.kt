@@ -18,10 +18,7 @@ abstract class BaseActivity<T : ViewDataBinding>: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,getLayoutId())
-//        transparentStatusBar()
-
-
-        hideStatusBar(window)
+//        hideStatusBar(window)
     }
 
 
