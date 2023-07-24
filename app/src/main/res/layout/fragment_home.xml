@@ -79,6 +79,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_browse_all"/>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_see_more"
                 style="@style/ButtonWhite"
                 android:text="@string/see_more"
                 android:layout_width="match_parent"

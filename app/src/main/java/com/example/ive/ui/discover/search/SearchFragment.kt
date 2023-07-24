@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ive.R
 import com.example.ive.databinding.FragmentSearchBinding
@@ -26,6 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
+    private lateinit var request:String
+
+    private var isFunctionInitialized = false
 
     private val adapterPhoto = SearchPhotoAdapter(object : OnclickListeners<PhotoData> {
         override fun onClick(item: PhotoData, number: Int) {
@@ -36,6 +41,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
     private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (!isFunctionInitialized){
+            super.initListeners()
+            super.initViews()
+            super.initListeners()
+        }
+    }
     override fun initViews() {
 
         with(binding) {
@@ -47,29 +61,39 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun initObservers() {
-        viewModel.listPhoto.observe(viewLifecycleOwner) {
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            when(it) {
+                is SearchViewModel.UiState.Success -> {
+                    adapterPhoto.submitListWithRequest(it.data.list,request)
 
-            adapterPhoto.submitList(it.list)
-            with(binding) {
-                tvResult.isVisible = true
-                btSeeMore.isVisible = true
+                    binding.btSeeMore.isVisible = it.isSeeMoreVisible
+                    binding.tvResult.isVisible = true
+                    iProgressBar.visibleProgress(false)
+                }
+                is SearchViewModel.UiState.Error -> {
+                    toast(it.message)
+                    iProgressBar.visibleProgress(false)
+                    binding.tvResult.isVisible = false
+                    binding.btSeeMore.isVisible = false
+                }
+                is SearchViewModel.UiState.Loading -> {
+                    iProgressBar.visibleProgress(true)
+                    binding.tvResult.isVisible = false
+                    binding.btSeeMore.isVisible = false
+                }
+                is SearchViewModel.UiState.None ->{
+                    binding.btSeeMore.isVisible = it.isSeeMoreVisible
+                }
+
             }
-            iProgressBar.visibleProgress(false)
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) {
-            Log.i("Search", it)
-            binding.etSearch.setText(it)
-            toast(it)
         }
     }
 
     override fun initListeners() {
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                iProgressBar.visibleProgress(true)
-                val text = binding.etSearch.text.toString()
-                viewModel.getPhotos(text)
+                request = binding.etSearch.text.toString()
+                viewModel.getPhotos(request)
                 view?.let { hideKeyboard(it.rootView) }
                 true
             } else {
@@ -77,6 +101,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             }
         }
 
+        binding.btSeeMore.setOnClickListener {
+            viewModel.getPhotos(request, true)
+        }
     }
 
     private fun hideKeyboard(view: View) {
@@ -86,4 +113,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun getDataBinding() = FragmentSearchBinding.inflate(layoutInflater)
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.resetState()
+    }
+
 }

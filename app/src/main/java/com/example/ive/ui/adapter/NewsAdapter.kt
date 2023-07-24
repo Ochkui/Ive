@@ -1,5 +1,6 @@
 package com.example.ive.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,12 @@ class NewsAdapter(val listener:OnclickListeners<DataNews> ): RecyclerView.Adapte
 
     fun submitList(list: List<DataNews>) {
         listItem.addAll(list)
+        Log.i("HomeViewModel", "commit list news")
+        notifyDataSetChanged()
+    }
+
+    fun removeList(){
+        listItem.clear()
         notifyDataSetChanged()
     }
 

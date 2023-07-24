@@ -7,7 +7,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class PhotoData(
+data class PhotoData(
+    var request:String?,
     val id: String,
     val urls: Urls,
     val user: User,
@@ -17,6 +18,8 @@ class PhotoData(
 
 @Parcelize
 class PhotoDataList(
+    var request:String,
+    @SerializedName("total_pages") var totalPages: Int,
     @SerializedName("results") var list:MutableList<PhotoData>
 ) : Parcelable
 

@@ -1,6 +1,8 @@
 package com.example.ive.ui.discover.profile
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -51,6 +53,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 adapterPhoto.submitList(it)
                 iProgressBar.visibleProgress(false)
                 binding.swRefresh.isRefreshing = false
+                binding.btSeeMore.visibility = View.VISIBLE
             }
         }
         viewModel.listError.observe(viewLifecycleOwner) {
@@ -59,6 +62,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     override fun initViews() {
+        binding.btSeeMore.visibility = View.INVISIBLE
         iProgressBar.visibleProgress(true)
         user.tag?.let {
             viewModel.getGalleries(it)

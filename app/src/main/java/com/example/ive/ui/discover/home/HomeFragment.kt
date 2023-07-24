@@ -1,13 +1,14 @@
 package com.example.ive.ui.discover.home
 
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.R
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.FragmentHomeBinding
+import com.example.ive.exstensions.toast
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
@@ -41,12 +42,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
 
     override fun initObservers() {
-        viewModel.listPhoto.observe(viewLifecycleOwner, Observer {
+
+        viewModel.uiState.observe(viewLifecycleOwner){
+            when(it){
+
+                is HomeViewModel.UiState.Error ->{
+                    toast(it.message)
+                    iProgressBar.visibleProgress(false)
+                }
+                is HomeViewModel.UiState.None ->{
+                    iProgressBar.visibleProgress(false)
+                }
+                is HomeViewModel.UiState.Loading -> {
+                    iProgressBar.visibleProgress(true)
+                }
+            }
+        }
+
+        viewModel.news.observe(viewLifecycleOwner) {
+            Log.i("HomeViewModel", "news send to adapter")
             adapterNews.submitList(it)
-            adapterPhoto.submitList(it)
-            iProgressBar.visibleProgress(false)
             binding.swRefresh.isRefreshing = false
-        })
+            iProgressBar.visibleProgress(false)
+        }
+
+        viewModel.popular.observe(viewLifecycleOwner) {
+            Log.i("HomeViewModel", "photo send to adapter")
+            adapterPhoto.submitList(it)
+            binding.swRefresh.isRefreshing = false
+            iProgressBar.visibleProgress(false)
+        }
     }
 
     override fun initViews() {
@@ -70,10 +95,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initListeners() {
         binding.swRefresh.setOnRefreshListener {
-            viewModel.getPhoto()
+            adapterNews.removeList()
+            adapterPhoto.removeList()
+            viewModel.refresh()
+        }
+
+        binding.btSeeMore.setOnClickListener {
+            viewModel.getPhotoPopular()
         }
     }
 
     override fun getDataBinding() = FragmentHomeBinding.inflate(layoutInflater)
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.resetState()
+    }
 
 }

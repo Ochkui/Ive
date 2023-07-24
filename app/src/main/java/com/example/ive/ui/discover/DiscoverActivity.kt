@@ -24,6 +24,7 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     private lateinit var btAdd: ImageButton
     private lateinit var btChat: ImageButton
     private lateinit var btProfile: ImageButton
+    private lateinit var buttonFlags: MutableMap<Int, Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +54,7 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     }
 
     private fun initView() {
-
+        navigationBarVisibility(true)
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_container_discover) as NavHostFragment
         navController = navHostFragment.navController
@@ -66,18 +67,25 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
             btProfile = includeNavBar.ibProfile
         }
 
+        buttonFlags = mutableMapOf(
+            R.id.ib_home to true,
+            R.id.ib_search to false,
+            R.id.ib_add to false,
+            R.id.ib_chats to false,
+            R.id.ib_profile to false
+        )
     }
 
     private fun initListeners() {
 
         btHome.setOnClickListener {
             animationScale(it, this@DiscoverActivity)
-            navigate(R.id.discoverFragment)
+            if (!navigate(R.id.discoverFragment, it.id)) toast("Home")
         }
 
         btSearch.setOnClickListener {
             animationScale(it, this@DiscoverActivity)
-            navigate(R.id.searchFragment)
+            if (!navigate(R.id.searchFragment, it.id)) toast("Search")
         }
 
         btAdd.setOnClickListener {
@@ -108,5 +116,24 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     private fun navigate(id: Int) {
         navController.navigate(id)
     }
+
+    private fun navigate(showId: Int, resId: Int): Boolean {
+        return if (buttonFlags[resId] == false) {
+            resetButtonFlags(resId)
+            navController.navigate(showId)
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun resetButtonFlags(id: Int) {
+        buttonFlags.replaceAll { _, _ -> false }
+        buttonFlags[id] = true
+    }
+
+//    override fun onBackPressed() {
+//        navController.popBackStack()
+//    }
 
 }

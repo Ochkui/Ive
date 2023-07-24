@@ -1,5 +1,6 @@
 package com.example.ive.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,11 @@ class PhotoAdapter(
 
     fun submitList(list: List<DataNews>) {
         listPhoto.addAll(list)
+        Log.i("HomeViewModel", "commit list photo")
+        notifyDataSetChanged()
+    }
+    fun removeList(){
+        listPhoto.clear()
         notifyDataSetChanged()
     }
 
