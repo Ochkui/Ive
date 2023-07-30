@@ -9,6 +9,13 @@
         android:id="@+id/discoverFragment"
         android:name="com.example.ive.ui.discover.home.HomeFragment"
         android:label="DiscoverFragment" >
+
+        <action
+            android:id="@+id/show_profile"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/show_photo"
+            app:destination="@id/photoFragment" />
     </fragment>
 
     <fragment
@@ -24,7 +31,12 @@
         android:name="com.example.ive.ui.discover.profile.UserProfileFragment"
         android:label="ProfileFragment">
 
+        <action
+            android:id="@+id/show_profile"
+            app:destination="@id/profileFragment" />
+
     </fragment>
+
     <fragment
         tools:layout="@layout/fragment_photo"
         android:id="@+id/photoFragment"
@@ -36,7 +48,11 @@
             app:destination="@id/profileFragment"
             app:popUpTo="@id/discoverFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="data"
+            app:argType="com.example.ive.component.model.DataNews" />
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.ive.ui.discover.profile.ProfileFragment"

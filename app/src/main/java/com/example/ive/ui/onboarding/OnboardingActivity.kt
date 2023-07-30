@@ -1,11 +1,11 @@
-package com.example.ive
+package com.example.ive.ui.onboarding
 
 import androidx.core.view.isVisible
+import com.example.ive.R
 import com.example.ive.ui.base.BaseActivity
 import com.example.ive.databinding.StartActivityBinding
 import com.example.ive.ui.discover.IProgressVisibility
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class OnboardingActivity : BaseActivity<StartActivityBinding>(), IProgressVisibility {

@@ -14,6 +14,7 @@ import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.DiscoverActivity
 import com.example.ive.ui.discover.IProgressVisibility
+import com.example.ive.ui.discover.photo.PhotoFragmentDirections
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,19 +25,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val adapterPhoto = PhotoAdapter(object : OnclickListeners<DataNews> {
         override fun onClick(item: DataNews, number: Int) {
-            navigate(R.id.photoFragment, bundleOf("data" to item))
+            navigate(
+                HomeFragmentDirections.showPhoto(item)
+            )
         }
 
     })
 
     private val adapterNews = NewsAdapter(object : OnclickListeners<DataNews> {
         override fun onClick(item: DataNews, number: Int) {
-
             if (number == 1) {
-                navigate(R.id.photoFragment, bundleOf("data" to item))
+                navigate(
+                    HomeFragmentDirections.showPhoto(item)
+                )
             } else {
                 (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
-                navigate(R.id.profileFragment, bundleOf("data" to item.user))
+                navigate(
+                    HomeFragmentDirections.showProfile(item.user)
+                )
             }
         }
     })

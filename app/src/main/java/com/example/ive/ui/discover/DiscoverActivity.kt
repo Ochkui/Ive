@@ -21,10 +21,8 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
-    private lateinit var buttonFlags: MutableMap<Int, Boolean>
 
     private val sharedViewModel:DiscoverSharedViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideSystemUI()
@@ -49,7 +47,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
                     or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         )
     }
-
     private fun initView() {
         navigationBarVisibility(true)
 
@@ -83,6 +80,7 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     }
 
     override fun getLayoutId() = R.layout.discaver_activity
+
     override fun visibleProgress(isVisible: Boolean) {
         binding.progress.isVisible = isVisible
     }
@@ -93,11 +91,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     private fun navigate(id: Int) {
         navController.navigate(id)
-    }
-
-    private fun resetButtonFlags(id: Int) {
-        buttonFlags.replaceAll { _, _ -> false }
-        buttonFlags[id] = true
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
