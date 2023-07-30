@@ -12,6 +12,7 @@ import com.example.ive.exstensions.toast
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.DiscoverActivity
 import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             if (number == 1) {
                 navigate(R.id.photoFragment, bundleOf("data" to item))
             } else {
+                (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
                 navigate(R.id.profileFragment, bundleOf("data" to item.user))
             }
         }

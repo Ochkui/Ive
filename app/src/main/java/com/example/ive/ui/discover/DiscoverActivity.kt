@@ -1,30 +1,29 @@
 package com.example.ive.ui.discover
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
-import android.widget.ImageButton
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.example.ive.R
 import com.example.ive.databinding.DiscaverActivityBinding
-import com.example.ive.exstensions.toast
 import com.example.ive.ui.base.BaseActivity
-import com.example.ive.utils.animationScale
+import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,INavigationBarVisibility {
+class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,INavigationBarVisibility,NavigationBarView.OnItemSelectedListener {
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
-    private lateinit var btHome: ImageButton
-    private lateinit var btSearch: ImageButton
-    private lateinit var btAdd: ImageButton
-    private lateinit var btChat: ImageButton
-    private lateinit var btProfile: ImageButton
     private lateinit var buttonFlags: MutableMap<Int, Boolean>
+
+    private val sharedViewModel:DiscoverSharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         initView()
         initListeners()
     }
-
     private fun hideSystemUI() {
 
         window.decorView.setSystemUiVisibility(
@@ -44,7 +42,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
                     or View.SYSTEM_UI_FLAG_IMMERSIVE
         )
     }
-
     private fun showSystemUI() {
         window.decorView.setSystemUiVisibility(
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -55,53 +52,34 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     private fun initView() {
         navigationBarVisibility(true)
+
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_container_discover) as NavHostFragment
         navController = navHostFragment.navController
 
-        with(binding) {
-            btHome = includeNavBar.ibHome
-            btSearch = includeNavBar.ibSearch
-            btAdd = includeNavBar.ibAdd
-            btChat = includeNavBar.ibChats
-            btProfile = includeNavBar.ibProfile
-        }
+        binding.btNav.setupWithNavController(navController)
+        binding.btNav.itemIconTintList = null
 
-        buttonFlags = mutableMapOf(
-            R.id.ib_home to true,
-            R.id.ib_search to false,
-            R.id.ib_add to false,
-            R.id.ib_chats to false,
-            R.id.ib_profile to false
-        )
+        binding.btNav.setOnItemSelectedListener(this)
+    }
+
+    fun navigateToMenu(fragmentId:Int) {
+        binding.btNav.selectedItemId = fragmentId
     }
 
     private fun initListeners() {
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
 
-        btHome.setOnClickListener {
-            animationScale(it, this@DiscoverActivity)
-            if (!navigate(R.id.discoverFragment, it.id)) toast("Home")
-        }
+            when (destination.id) {
+                R.id.photoFragment -> {
+                    binding.btNav.visibility = View.GONE
+                }
 
-        btSearch.setOnClickListener {
-            animationScale(it, this@DiscoverActivity)
-            if (!navigate(R.id.searchFragment, it.id)) toast("Search")
+                else -> {
+                    binding.btNav.visibility = View.VISIBLE
+                }
+            }
         }
-
-        btAdd.setOnClickListener {
-            animationScale(it, this@DiscoverActivity)
-            toast("Add")
-        }
-        btChat.setOnClickListener {
-            animationScale(it, this@DiscoverActivity)
-            toast("Chats")
-        }
-        btProfile.setOnClickListener {
-            animationScale(it, this@DiscoverActivity)
-            toast("Profile")
-        }
-
-        binding.includeNavBar
     }
 
     override fun getLayoutId() = R.layout.discaver_activity
@@ -117,23 +95,31 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         navController.navigate(id)
     }
 
-    private fun navigate(showId: Int, resId: Int): Boolean {
-        return if (buttonFlags[resId] == false) {
-            resetButtonFlags(resId)
-            navController.navigate(showId)
-            true
-        } else {
-            false
-        }
-    }
-
     private fun resetButtonFlags(id: Int) {
         buttonFlags.replaceAll { _, _ -> false }
         buttonFlags[id] = true
     }
 
-//    override fun onBackPressed() {
-//        navController.popBackStack()
-//    }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.userProfileFragment -> {
+            //TODO set user name
+                sharedViewModel.saveUserName("Stas")
+                if (navController.currentDestination?.id == R.id.profileFragment){
+                    navController.navigate(R.id.userProfileFragment)
+                }
 
+                item.onNavDestinationSelected(navController)
+            }
+            R.id.discoverFragment -> {
+                navController.navigate(R.id.discoverFragment)
+                item.onNavDestinationSelected(navController)
+            }
+
+            else -> {
+                item.onNavDestinationSelected(navController)
+            }
+        }
+        return true
+    }
 }

@@ -7,6 +7,7 @@ import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.FragmentPhotoBinding
 import com.example.ive.exstensions.getParcel
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.DiscoverActivity
 import com.example.ive.ui.discover.INavigationBarVisibility
 import com.squareup.picasso.Picasso
 
@@ -16,7 +17,6 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
     private var photo: DataNews? = null
 
     override fun initViews() {
-        hideStatusBar()
         visibilityNavBar.navigationBarVisibility(false)
         photo = getParcel("data")
 
@@ -37,13 +37,13 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
 
         binding.vUserProf.setOnClickListener {
             visibilityNavBar.navigationBarVisibility(true)
-            navigate(R.id.profileFragment, bundleOf("data" to photo?.user))
+            (activity as DiscoverActivity).navigateToMenu(R.id.profileFragment)
+//            navigate(R.id.profileFragment, bundleOf("data" to photo?.user))
+            navigate(
+                PhotoFragmentDirections.showProfile(photo?.user)
+            )
+            goBack()
         }
-    }
-
-    override fun onStop() {
-        visibilityNavBar.navigationBarVisibility(true)
-        super.onStop()
     }
 
     override fun getDataBinding() = FragmentPhotoBinding.inflate(layoutInflater)

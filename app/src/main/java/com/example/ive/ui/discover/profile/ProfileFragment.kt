@@ -1,20 +1,20 @@
 package com.example.ive.ui.discover.profile
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.R
 import com.example.ive.component.model.UserProfileViewData
 import com.example.ive.databinding.FragmentProfileBinding
-import com.example.ive.exstensions.getParcel
 import com.example.ive.exstensions.toast
 import com.example.ive.network.model.PhotoGallery
 import com.example.ive.network.model.toDataNews
 import com.example.ive.ui.adapter.PhotoUserGalleryAdapter
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.DiscoverSharedViewModel
 import com.example.ive.ui.discover.INavigationBarVisibility
 import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
@@ -25,8 +25,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private lateinit var user: UserProfileViewData
     private val viewModel: ProfileViewModel by viewModels()
+    private val sharedViewModel:DiscoverSharedViewModel by activityViewModels()
+    private val args: ProfileFragmentArgs by navArgs()
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
     private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
+
+    private lateinit var tag: String
 
 
     private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery> {
@@ -39,41 +43,43 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getParcel<UserProfileViewData>(KEY_DATA)?.let {
+        args.data?.let {
             user = it
+            tag = user.tag?: ""
         } ?: run {
-            goBack()
             toast("Not found")
+            onDestroy()
         }
+
     }
 
     override fun initObservers() {
-        viewModel.listPhoto.observe(viewLifecycleOwner) {
-            if (it != null) {
-                adapterPhoto.submitList(it)
-                iProgressBar.visibleProgress(false)
-                binding.swRefresh.isRefreshing = false
-                binding.btSeeMore.visibility = View.VISIBLE
+        viewModel.uiState.observe(viewLifecycleOwner){
+            when(it){
+                is ProfileViewModel.UiState.Error -> {
+                    toast(it.message)
+                }
+
+                ProfileViewModel.UiState.Loading -> {
+                    iProgressBar.visibleProgress(true)
+                }
+
+                ProfileViewModel.UiState.None -> {
+                    iProgressBar.visibleProgress(false)
+                }
             }
         }
-        viewModel.listError.observe(viewLifecycleOwner) {
-            val text = (it)
+
+        viewModel.listPhoto.observe(viewLifecycleOwner){
+            adapterPhoto.submitList(it?: emptyList())
+            iProgressBar.visibleProgress(false)
+            binding.swRefresh.isRefreshing = false
         }
+
     }
 
     override fun initViews() {
-        binding.btSeeMore.visibility = View.INVISIBLE
         iProgressBar.visibleProgress(true)
-        user.tag?.let {
-            viewModel.getGalleries(it)
-            binding.swRefresh.setOnRefreshListener {
-                viewModel.getGalleries(it)
-            }
-        } ?: run {
-            goBack()
-            toast("Not found")
-        }
-
         with(binding) {
 
             btFollowTo.text = resources.getString(R.string.follow, user.name)
@@ -83,6 +89,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             rvGallery.isNestedScrollingEnabled = false
             rvGallery.adapter = adapterPhoto
         }
+
+        viewModel.getGalleries(tag)
+
+    }
+    override fun initListeners() {
+        binding.swRefresh.setOnRefreshListener {
+            adapterPhoto.removeList()
+            viewModel.getGalleries(tag)
+        }
+    }
+    override fun onStop() {
+        super.onStop()
+        adapterPhoto.removeList()
+        viewModel.resetState()
     }
 
     override fun getDataBinding() = FragmentProfileBinding.inflate(layoutInflater)

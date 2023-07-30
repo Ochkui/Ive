@@ -48,7 +48,7 @@ class SearchViewModel @Inject constructor(
     private fun getData(request: String) {
         if (request != "" && currentPage <= totalPages) {
             viewModelScope.launch {
-                when (val result = photoRepository.getSearchPhoto(request, 12, currentPage)) {
+                when (val result = photoRepository.getSearchPhoto(request, 30, currentPage)) {
                     is ApiResponse.Error -> {
                         _uiState.postValue(UiState.Error(result.error))
                     }
@@ -57,7 +57,6 @@ class SearchViewModel @Inject constructor(
                         result.data.totalPages.let {
                             if (it != 0) {
                                 totalPages = it
-//                                currentPage++
                                 _uiState.postValue(
                                     UiState.Success(
                                         data = result.data,

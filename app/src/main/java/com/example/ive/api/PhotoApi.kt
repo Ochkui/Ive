@@ -19,7 +19,7 @@ interface PhotoApi {
         pageSize: Int = DEFAULT_PAGE_SIZE
     ): Response<List<PhotoData>>
 
-    @GET("users/{username}/collections")
+    @GET(GET_GALLERY)
     suspend fun getGallery(@Path("username") username:String): Response<List<PhotoGallery>>
 
     @GET(SEARCH_PHOTO)
@@ -31,6 +31,7 @@ interface PhotoApi {
 
     companion object {
         const val SEARCH_PHOTO = "search/photos"
+        const val GET_GALLERY = "users/{username}/collections"
         const val QUERY = "query"
         const val COUNT_ITEM = "per_page"
         const val GET_PHOTOS = "/photos"

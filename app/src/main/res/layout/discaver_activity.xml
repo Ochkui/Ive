@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@+id/include_nav_bar"
+            app:layout_constraintBottom_toTopOf="@+id/bt_nav"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,13 +39,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            app:visibility="@{isNavBarVisible}"
-            android:id="@+id/include_nav_bar"
-            layout="@layout/custom_bottom_navigation_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent" />
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    app:itemIconSize="40dp"
+                    android:id="@+id/bt_nav"
+                    android:layout_width="0dp"
+                    android:layout_height="83dp"
+                    app:labelVisibilityMode="unlabeled"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:menu="@menu/bottom_nav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

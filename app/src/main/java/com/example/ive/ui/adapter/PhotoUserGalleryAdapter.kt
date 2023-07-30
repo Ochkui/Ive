@@ -3,7 +3,6 @@ package com.example.ive.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.RecyclerVerticalPhotoBinding
 import com.example.ive.network.model.PhotoGallery
 import com.example.ive.ui.listeners.OnclickListeners
@@ -30,6 +29,11 @@ class PhotoUserGalleryAdapter(
 
     fun submitList(list: List<PhotoGallery>) {
         listPhoto.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun removeList(){
+        listPhoto.clear()
         notifyDataSetChanged()
     }
 
