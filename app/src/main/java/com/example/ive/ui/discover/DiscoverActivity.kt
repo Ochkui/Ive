@@ -55,13 +55,11 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         navController = navHostFragment.navController
 
         binding.btNav.setupWithNavController(navController)
-        binding.btNav.itemIconTintList = null
-
         binding.btNav.setOnItemSelectedListener(this)
     }
 
     fun navigateToMenu(fragmentId:Int) {
-        binding.btNav.selectedItemId = fragmentId
+        binding.btNav.selectedItemId(fragmentId)
     }
 
     private fun initListeners() {
@@ -87,10 +85,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     override fun navigationBarVisibility(isVisibility: Boolean) {
         binding.isNavBarVisible = isVisibility
-    }
-
-    private fun navigate(id: Int) {
-        navController.navigate(id)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

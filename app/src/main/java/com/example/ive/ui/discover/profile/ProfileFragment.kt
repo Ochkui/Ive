@@ -2,7 +2,6 @@ package com.example.ive.ui.discover.profile
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -14,8 +13,6 @@ import com.example.ive.network.model.PhotoGallery
 import com.example.ive.network.model.toDataNews
 import com.example.ive.ui.adapter.PhotoUserGalleryAdapter
 import com.example.ive.ui.base.BaseFragment
-import com.example.ive.ui.discover.DiscoverSharedViewModel
-import com.example.ive.ui.discover.INavigationBarVisibility
 import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,14 +22,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private lateinit var user: UserProfileViewData
     private val viewModel: ProfileViewModel by viewModels()
-    private val sharedViewModel:DiscoverSharedViewModel by activityViewModels()
     private val args: ProfileFragmentArgs by navArgs()
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
-    private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
-
     private lateinit var tag: String
-
-
     private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery> {
         override fun onClick(item: PhotoGallery) {
             val data = item.toDataNews()
@@ -50,7 +42,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             toast("Not found")
             onDestroy()
         }
-
     }
 
     override fun initObservers() {
@@ -104,10 +95,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         adapterPhoto.removeList()
         viewModel.resetState()
     }
-
     override fun getDataBinding() = FragmentProfileBinding.inflate(layoutInflater)
 
-    companion object {
-        const val KEY_DATA = "data"
-    }
 }

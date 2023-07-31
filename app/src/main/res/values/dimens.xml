@@ -8,4 +8,11 @@
     <dimen name="distance_between_button">9dp</dimen>
     <dimen name="profile_icon_size">28dp</dimen>
 
+    <!--    bottom nav view-->
+    <dimen name="bottom_nav_top_border_height">0.5dp</dimen>
+    <dimen name="bottom_nav_min_height">40dp</dimen>
+    <dimen name="bottom_nav_item_icon_size">40dp</dimen>
+    <dimen name="bottom_nav_padding_top">9dp</dimen>
+    <dimen name="bottom_nav_padding_bottom">21dp</dimen>
+
 </resources>
