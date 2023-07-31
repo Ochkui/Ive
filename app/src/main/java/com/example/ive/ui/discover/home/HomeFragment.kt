@@ -24,7 +24,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel: HomeViewModel by viewModels()
 
     private val adapterPhoto = PhotoAdapter(object : OnclickListeners<DataNews> {
-        override fun onClick(item: DataNews, number: Int) {
+        override fun onClick(item: DataNews) {
             navigate(
                 HomeFragmentDirections.showPhoto(item)
             )
@@ -33,18 +33,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     })
 
     private val adapterNews = NewsAdapter(object : OnclickListeners<DataNews> {
-        override fun onClick(item: DataNews, number: Int) {
-            if (number == 1) {
-                navigate(
-                    HomeFragmentDirections.showPhoto(item)
-                )
-            } else {
-                (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
-                navigate(
-                    HomeFragmentDirections.showProfile(item.user)
-                )
-            }
+        override fun onClick(item: DataNews) {
+
+            (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
+            navigate(
+                HomeFragmentDirections.showProfile(item.user)
+            )
         }
+    }, object : OnclickListeners<DataNews>{
+        override fun onClick(item: DataNews) {
+            navigate(
+                HomeFragmentDirections.showPhoto(item)
+            )
+        }
+
     })
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }

@@ -33,7 +33,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     private var isFunctionInitialized = false
 
     private val adapterPhoto = SearchPhotoAdapter(object : OnclickListeners<PhotoData> {
-        override fun onClick(item: PhotoData, number: Int) {
+        override fun onClick(item: PhotoData) {
             navigate(R.id.photoFragment, bundleOf("data" to item.toDataNews()))
         }
     })

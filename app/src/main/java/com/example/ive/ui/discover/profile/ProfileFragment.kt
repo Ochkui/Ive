@@ -34,7 +34,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
 
     private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery> {
-        override fun onClick(item: PhotoGallery, number: Int) {
+        override fun onClick(item: PhotoGallery) {
             val data = item.toDataNews()
             navigate(R.id.photoFragment, bundleOf("data" to data))
         }

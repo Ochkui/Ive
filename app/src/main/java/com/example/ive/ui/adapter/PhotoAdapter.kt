@@ -23,7 +23,7 @@ class PhotoAdapter(
             Picasso.get()
                 .load(item.imageUrls)
                 .into(binding.aiImage)
-            binding.aiImage.setOnClickListener { listener.onClick(item,1) }
+            binding.aiImage.setOnClickListener { listener.onClick(item) }
         }
     }
 
