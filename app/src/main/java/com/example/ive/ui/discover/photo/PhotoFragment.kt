@@ -5,6 +5,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.ive.R
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.FragmentPhotoBinding
+import com.example.ive.exstensions.hideStatusBar
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.DiscoverActivity
 import com.example.ive.ui.discover.INavigationBarVisibility
@@ -18,6 +19,7 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
     private val args: PhotoFragmentArgs by navArgs()
 
     override fun initViews() {
+        hideStatusBar()
         visibilityNavBar.navigationBarVisibility(false)
         photo = args.data
 
@@ -38,7 +40,7 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
 
         binding.vUserProf.setOnClickListener {
             visibilityNavBar.navigationBarVisibility(true)
-            (activity as DiscoverActivity).navigateToMenu(R.id.profileFragment)
+            (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
             navigate(
                 PhotoFragmentDirections.showProfile(photo?.user)
             )

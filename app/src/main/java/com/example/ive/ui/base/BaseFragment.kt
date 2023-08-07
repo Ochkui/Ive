@@ -53,9 +53,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     protected abstract fun getDataBinding(): T
 
-    protected fun hideStatusBar() {
-    }
-
     protected fun navigate(id: Int, bundle: Bundle = bundleOf()) {
         navController.navigate(id, bundle)
     }

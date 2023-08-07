@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.R
 import com.example.ive.component.model.UserProfileViewData
 import com.example.ive.databinding.FragmentProfileBinding
+import com.example.ive.exstensions.showStatusBar
 import com.example.ive.exstensions.toast
 import com.example.ive.network.model.PhotoGallery
 import com.example.ive.network.model.toDataNews
@@ -70,6 +71,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     override fun initViews() {
+        showStatusBar()
         iProgressBar.visibleProgress(true)
         with(binding) {
 

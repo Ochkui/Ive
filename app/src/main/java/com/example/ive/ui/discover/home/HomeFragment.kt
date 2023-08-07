@@ -1,22 +1,24 @@
 package com.example.ive.ui.discover.home
 
 import android.util.Log
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.R
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.FragmentHomeBinding
+import com.example.ive.exstensions.showStatusBar
 import com.example.ive.exstensions.toast
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.DiscoverActivity
 import com.example.ive.ui.discover.IProgressVisibility
-import com.example.ive.ui.discover.photo.PhotoFragmentDirections
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -69,12 +71,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
 
-        viewModel.news.observe(viewLifecycleOwner) {
-            Log.i("HomeViewModel", "news send to adapter")
-            adapterNews.submitList(it)
-            binding.swRefresh.isRefreshing = false
-            iProgressBar.visibleProgress(false)
-        }
+//        viewModel.news.observe(viewLifecycleOwner) {
+//            Log.i("HomeViewModel", "news send to adapter")
+////            adapterNews.submitList(it)
+//            binding.swRefresh.isRefreshing = false
+//            iProgressBar.visibleProgress(false)
+//        }
 
         viewModel.popular.observe(viewLifecycleOwner) {
             Log.i("HomeViewModel", "photo send to adapter")
@@ -86,6 +88,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initViews() {
 
+        showStatusBar()
         iProgressBar.visibleProgress(true)
         val stLayoutManager = StaggeredGridLayoutManager(
             2, StaggeredGridLayoutManager.VERTICAL
@@ -101,11 +104,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             rvListPhoto.layoutManager = stLayoutManager
             rvListPhoto.adapter = adapterPhoto
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagingDataFlow.collectLatest { pagingData ->
+                adapterNews.submitData(pagingData)
+            }
+        }
     }
 
     override fun initListeners() {
         binding.swRefresh.setOnRefreshListener {
-            adapterNews.removeList()
+//            adapterNews.removeList()
+            adapterNews.refresh()
             adapterPhoto.removeList()
             viewModel.refresh()
         }
@@ -120,6 +130,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onStop() {
         super.onStop()
         viewModel.resetState()
+        adapterNews.refresh()
     }
 
 }

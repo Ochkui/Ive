@@ -12,8 +12,8 @@ class PhotoRepository @Inject constructor(
     private val api:PhotoApi
 ):BaseRepository(){
 
-    suspend fun getPhotos(orderBy:String = "latest",page: Int = 1): ApiResponse<List<PhotoData>> {
-        return request { api.getPhoto(orderBy, page = page) }
+    suspend fun getPhotos(orderBy:String = "latest",page: Int = 1, pageSize:Int = 10): ApiResponse<List<PhotoData>> {
+        return request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
     }
 
     suspend fun getGalleries(username: String):ApiResponse<List<PhotoGallery>>{
