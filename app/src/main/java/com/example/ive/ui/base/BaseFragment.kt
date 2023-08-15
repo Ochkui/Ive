@@ -76,6 +76,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         navController.navigate(directions)
     }
 
+    // todo improve
     protected fun onBack() {
         navController.popBackStack()
     }

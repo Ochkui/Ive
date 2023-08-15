@@ -10,6 +10,7 @@ import okhttp3.Route
 class BaseInterceptor:Interceptor,Authenticator {
     private val baseHeaders = mapOf(
         AUTHORIZATION to "$CLIENT_ID ${BuildConfig.ACCESS_KEY}",
+        // todo improve
         ACCEPT_VERSION to "v1"
     )
 

@@ -29,6 +29,7 @@ class PhotoAdapter(
 
     fun submitList(list: List<DataNews>) {
         listPhoto.addAll(list)
+        // todo improve
         Log.i("HomeViewModel", "commit list photo")
         notifyDataSetChanged()
     }

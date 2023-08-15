@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.ive.R
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.FragmentHomeBinding
 import com.example.ive.exstensions.showStatusBar
@@ -13,7 +12,6 @@ import com.example.ive.exstensions.toast
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
-import com.example.ive.ui.discover.DiscoverActivity
 import com.example.ive.ui.discover.IProgressVisibility
 import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,43 +26,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val adapterPhoto = PhotoAdapter(object : OnclickListeners<DataNews> {
         override fun onClick(item: DataNews) {
             navigate(
-                HomeFragmentDirections.showPhoto(item)
+                HomeFragmentDirections.homeToPhoto(item)
             )
         }
 
     })
 
-    private val adapterNews = NewsAdapter(object : OnclickListeners<DataNews> {
-        override fun onClick(item: DataNews) {
+    // todo improve
+    private val adapterNews = NewsAdapter(
+        userProfileListeners = ::navigateToProfile,
+        imageListener = { item -> navigate(HomeFragmentDirections.homeToPhoto(item)) }
+    )
 
-            (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
-            navigate(
-                HomeFragmentDirections.showProfile(item.user)
-            )
-        }
-    }, object : OnclickListeners<DataNews>{
-        override fun onClick(item: DataNews) {
-            navigate(
-                HomeFragmentDirections.showPhoto(item)
-            )
-        }
-
-    })
+    private fun navigateToProfile(item: DataNews) {
+        navigate(HomeFragmentDirections.homeToProfile(item))
+    }
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
 
     override fun initObservers() {
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            when (it) {
 
-        viewModel.uiState.observe(viewLifecycleOwner){
-            when(it){
-
-                is HomeViewModel.UiState.Error ->{
+                is HomeViewModel.UiState.Error -> {
                     toast(it.message)
                     iProgressBar.visibleProgress(false)
                 }
-                is HomeViewModel.UiState.None ->{
+
+                is HomeViewModel.UiState.None -> {
                     iProgressBar.visibleProgress(false)
                 }
+
                 is HomeViewModel.UiState.Loading -> {
                     iProgressBar.visibleProgress(true)
                 }
@@ -95,16 +87,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         )
 
         with(binding) {
-            rvListItem.layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false
-            )
-            rvListPhoto.isNestedScrollingEnabled = false
-            rvListItem.adapter = adapterNews
-            rvListPhoto.setHasFixedSize(false)
-            rvListPhoto.layoutManager = stLayoutManager
-            rvListPhoto.adapter = adapterPhoto
+            rvListItem.apply {
+                layoutManager = LinearLayoutManager(
+                    requireContext(), LinearLayoutManager.HORIZONTAL, false
+                )
+                adapter = adapterNews
+            }
+
+            rvListPhoto.apply {
+                isNestedScrollingEnabled = false
+                setHasFixedSize(false)
+                layoutManager = stLayoutManager
+                adapter = adapterPhoto
+            }
         }
 
+        // todo improve
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.pagingDataFlow.collectLatest { pagingData ->
                 adapterNews.submitData(pagingData)
@@ -129,6 +127,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onStop() {
         super.onStop()
+        // todo improve SingleLiveEvent
         viewModel.resetState()
         adapterNews.refresh()
     }

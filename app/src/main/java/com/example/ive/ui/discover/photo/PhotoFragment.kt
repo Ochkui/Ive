@@ -14,21 +14,21 @@ import com.squareup.picasso.Picasso
 class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
 
     private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
-    private var photo: DataNews? = null
+    private lateinit var photo: DataNews
 
     private val args: PhotoFragmentArgs by navArgs()
 
     override fun initViews() {
         hideStatusBar()
         visibilityNavBar.navigationBarVisibility(false)
-        photo = args.data
-
+        photo = args.dataNews
+// todo improve
         Picasso.get()
-            .load(photo?.imageUrls)
+            .load(photo.imageUrls)
             .into(binding.ibImage)
 
         with(binding.vUserProf) {
-            setViewData(photo?.user!!)
+            setViewData(photo.user)
             binding.vUserProf.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         }
     }
@@ -40,10 +40,10 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
 
         binding.vUserProf.setOnClickListener {
             visibilityNavBar.navigationBarVisibility(true)
-            (activity as DiscoverActivity).navigateToMenu(R.id.userProfileFragment)
             navigate(
-                PhotoFragmentDirections.showProfile(photo?.user)
+                PhotoFragmentDirections.photoToProfile(photo)
             )
+            (activity as DiscoverActivity).navigateToMenu(R.id.profileFragment)
         }
     }
 

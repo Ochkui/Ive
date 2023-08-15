@@ -29,9 +29,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var request:String
-
+    // todo improve
     private var isFunctionInitialized = false
-
+    // todo improve
     private val adapterPhoto = SearchPhotoAdapter(object : OnclickListeners<PhotoData> {
         override fun onClick(item: PhotoData) {
             navigate(R.id.photoFragment, bundleOf("data" to item.toDataNews()))
@@ -39,6 +39,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     })
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
+    // todo improve
     private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
 
 
@@ -105,7 +106,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             viewModel.getPhotos(request, true)
         }
     }
-
+    // todo improve
     private fun hideKeyboard(view: View) {
         val inputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

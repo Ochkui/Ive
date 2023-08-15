@@ -12,14 +12,16 @@ import com.example.ive.databinding.RecyclerHorizontalItemBinding
 import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
+typealias NewsClickListener<T> = (T) -> Unit
+
 class NewsAdapter(
-    private val userProfileListeners: OnclickListeners<DataNews>,
-    private val imageListener:OnclickListeners<DataNews>
+    private val userProfileListeners: NewsClickListener<DataNews>,
+    private val imageListener:NewsClickListener<DataNews>
 ): PagingDataAdapter<DataNews, NewsAdapter.ViewHolder>(DiffCallback) {
 
     class ViewHolder(
-        private val imageListener: OnclickListeners<DataNews>,
-        private val userProfileListeners: OnclickListeners<DataNews>,
+        private val imageListener: NewsClickListener<DataNews>,
+        private val userProfileListeners: NewsClickListener<DataNews>,
         private val binding: RecyclerHorizontalItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(listItem: DataNews) {
@@ -29,10 +31,10 @@ class NewsAdapter(
             binding.vUserProf.setViewData(listItem.user)
 
             binding.aiImage.setOnClickListener {
-                imageListener.onClick(listItem)
+                imageListener(listItem)
             }
             binding.vUserProf.setOnClickListener {
-                userProfileListeners.onClick(listItem)
+                userProfileListeners(listItem)
             }
         }
     }

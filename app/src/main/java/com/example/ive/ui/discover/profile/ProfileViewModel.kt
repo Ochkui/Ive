@@ -1,9 +1,15 @@
 package com.example.ive.ui.discover.profile
 
+import android.util.Log
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.navArgs
 import com.example.ive.network.ApiResponse
 import com.example.ive.network.model.PhotoGallery
 import com.example.ive.repository.PhotoRepository
@@ -27,7 +33,7 @@ class ProfileViewModel @Inject constructor(
 
     var listPhoto = MutableLiveData<List<PhotoGallery>?>()
 
-     fun getGalleries(username:String) {
+     fun getProfileInfo(username:String) {
 
          _uiState.postValue(UiState.Loading)
         viewModelScope.launch {
@@ -40,6 +46,10 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun getMyProfile(){
+
     }
 
     fun resetState(){

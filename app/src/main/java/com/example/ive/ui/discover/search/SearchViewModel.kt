@@ -48,6 +48,7 @@ class SearchViewModel @Inject constructor(
     private fun getData(request: String) {
         if (request != "" && currentPage <= totalPages) {
             viewModelScope.launch {
+                // todo improve
                 when (val result = photoRepository.getSearchPhoto(request, 30, currentPage)) {
                     is ApiResponse.Error -> {
                         _uiState.postValue(UiState.Error(result.error))

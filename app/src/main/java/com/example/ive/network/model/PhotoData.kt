@@ -4,11 +4,11 @@ import android.os.Parcelable
 import com.example.ive.component.model.DataNews
 import com.example.ive.component.model.UserProfileViewData
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PhotoData(
-    var request:String?,
+    var request: String?,
     val id: String,
     val urls: Urls,
     val user: User,
@@ -18,14 +18,15 @@ data class PhotoData(
 
 @Parcelize
 class PhotoDataList(
-    var request:String,
+    var request: String,
     @SerializedName("total_pages") var totalPages: Int,
-    @SerializedName("results") var list:MutableList<PhotoData>
+    @SerializedName("results") var list: MutableList<PhotoData>
 ) : Parcelable
 
 @Parcelize
 class PhotoGallery(
     val id: String,
+    //todo improve
     val cover_photo: CoverPhoto,
     val user: User
 
@@ -39,7 +40,7 @@ class CoverPhoto(
     @SerializedName("urls") var urls: Urls? = Urls(),
     @SerializedName("user") var user: User? = User()
 
-):Parcelable
+) : Parcelable
 
 @Parcelize
 class User(
@@ -77,6 +78,13 @@ fun PhotoData.toDataNews() = DataNews(
     location = location
 )
 
+fun User.toUserProfileViewData() = UserProfileViewData(
+    image = profileImage?.large,
+    name = name,
+    tag = username,
+    location = location
+)
+
 //fun PhotoDataList.toDataNews() = DataNews(
 //    user = UserProfileViewData(list.user.profileImage?.large, list.user.name, list.user.username, list.user.location),
 //    imageUrls = list.urls.regular,
@@ -85,7 +93,7 @@ fun PhotoData.toDataNews() = DataNews(
 //)
 
 fun PhotoGallery.toDataNews() = DataNews(
-    user = UserProfileViewData(user.profileImage?.large,user.name,user.username,user.location),
+    user = UserProfileViewData(user.profileImage?.large, user.name, user.username, user.location),
     imageUrls = cover_photo.urls?.regular,
     photoId = id,
     location = user.location

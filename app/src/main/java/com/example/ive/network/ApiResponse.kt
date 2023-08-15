@@ -8,6 +8,7 @@ sealed class ApiResponse<T> {
     data class Error<T>(val error: String): ApiResponse<T>()
 }
 
+// todo improve
 @Parcelize
 data class ErrorResponse(
     val errors: List<String>

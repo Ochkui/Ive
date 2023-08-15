@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,INavigationBarVisibility,NavigationBarView.OnItemSelectedListener {
+class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,INavigationBarVisibility {
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -55,7 +55,7 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         navController = navHostFragment.navController
 
         binding.btNav.setupWithNavController(navController)
-        binding.btNav.setOnItemSelectedListener(this)
+//        binding.btNav.setOnItemSelectedListener(this)
     }
 
     fun navigateToMenu(fragmentId:Int) {
@@ -75,6 +75,36 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
                 }
             }
         }
+        binding.btNav.setOnItemSelectedListener{
+            when (it.itemId){
+                R.id.discoverFragment -> {
+                    if (navController.currentDestination?.id != R.id.discoverFragment){
+                        navController.navigate(R.id.discoverFragment)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                R.id.searchFragment ->{
+                    if (navController.currentDestination?.id != R.id.searchFragment){
+                        navController.navigate(R.id.searchFragment)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                R.id.profileFragment -> {
+                    val fragmentCurrent = navController.currentDestination?.id
+                    if (fragmentCurrent != R.id.profileFragment){
+                        navController.navigate(R.id.profileFragment)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                else -> {false}
+            }
+        }
     }
 
     override fun getLayoutId() = R.layout.discaver_activity
@@ -87,26 +117,4 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         binding.isNavBarVisible = isVisibility
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.userProfileFragment -> {
-            //TODO set user name
-                sharedViewModel.saveUserName("Stas")
-                if (navController.currentDestination?.id == R.id.profileFragment){
-                    navController.navigate(R.id.userProfileFragment)
-                }
-
-                item.onNavDestinationSelected(navController)
-            }
-            R.id.discoverFragment -> {
-                navController.navigate(R.id.discoverFragment)
-                item.onNavDestinationSelected(navController)
-            }
-
-            else -> {
-                item.onNavDestinationSelected(navController)
-            }
-        }
-        return true
-    }
 }

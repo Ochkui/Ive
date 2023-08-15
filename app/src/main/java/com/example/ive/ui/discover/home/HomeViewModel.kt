@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.ive.component.model.DataNews
 import com.example.ive.network.ApiResponse
 import com.example.ive.network.PhotoNewsPagingSource
@@ -31,7 +32,7 @@ class HomeViewModel @Inject constructor(
 
         object None : UiState()
     }
-
+// todo improve
 //    private val _news = MutableLiveData<List<DataNews>>()
 //    val news: LiveData<List<DataNews>> = _news
 
@@ -42,13 +43,14 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> = _uiState
-
+    // todo improve
     private val pageSize = 5
 
     val pagingDataFlow: kotlinx.coroutines.flow.Flow<PagingData<DataNews>> = Pager(
         config = PagingConfig(pageSize = pageSize),
         pagingSourceFactory = { PhotoNewsPagingSource(photoRepository, pageSize) }
     ).flow
+        .cachedIn(viewModelScope)
         .stateIn(viewModelScope, SharingStarted.Lazily,PagingData.empty())
 
     init {
@@ -58,7 +60,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getPhotoNews(){
         _uiState.postValue(UiState.Loading)
-
+// todo improve
 //        viewModelScope.launch{
 //            when (val result = photoRepository.getPhotos()) {
 //
@@ -71,6 +73,7 @@ class HomeViewModel @Inject constructor(
 //        }
     }
 
+    // todo improve
     fun getPhotoPopular(){
         ++currentPage
         _uiState.postValue(UiState.Loading)
@@ -81,6 +84,7 @@ class HomeViewModel @Inject constructor(
             )) {
                 is ApiResponse.Error -> _uiState.postValue(UiState.Error(result.error))
                 is ApiResponse.Success -> {
+                    // todo improve
                     Log.i("HomeViewModel", "give list photo")
                     _popular.postValue(result.data.map { it.toDataNews() })
                 }
