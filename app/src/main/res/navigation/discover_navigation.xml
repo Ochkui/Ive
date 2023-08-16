@@ -73,5 +73,9 @@
             app:argType="com.example.ive.component.model.DataNews" />
 
     </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.ive.ui.discover.chat.ChatFragment"
+        android:label="ChatFragment" />
 
 </navigation>

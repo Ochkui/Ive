@@ -1,5 +1,7 @@
 package com.example.ive.ui.discover.profile
 
+import android.opengl.Visibility
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -42,7 +44,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         dataNews = try {
             args.dataNews
         } catch (e:Exception){
-            toast("Me")
             null
         }
         getGalleries(dataNews?.user)
@@ -84,6 +85,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             viewModel.getProfileInfo(user.tag?: "")
         } else {
             toast("Me")
+            binding.btFollowTo.isVisible = false
             viewModel.getMyProfile()
         }
     }
@@ -93,6 +95,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
     override fun onStop() {
         super.onStop()
+        iProgressBar.visibleProgress(false)
         adapterPhoto.removeList()
         viewModel.resetState()
     }

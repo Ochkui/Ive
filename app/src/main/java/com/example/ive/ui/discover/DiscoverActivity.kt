@@ -3,7 +3,6 @@ package com.example.ive.ui.discover
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.view.View
-import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,7 +21,6 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        hideSystemUI()
         initView()
         initListeners()
     }
@@ -56,38 +54,28 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         }
         binding.btNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.discoverFragment -> {
-                    if (navController.currentDestination?.id != R.id.discoverFragment) {
-                        navController.navigate(R.id.discoverFragment)
-                        true
-                    } else {
-                        false
-                    }
-                }
 
-                R.id.searchFragment -> {
-                    if (navController.currentDestination?.id != R.id.searchFragment) {
-                        navController.navigate(R.id.searchFragment)
-                        true
-                    } else {
-                        false
-                    }
-                }
+                R.id.discoverFragment -> itemSelectNavigation(R.id.discoverFragment)
 
-                R.id.profileFragment -> {
-                    val fragmentCurrent = navController.currentDestination?.id
-                    if (fragmentCurrent != R.id.profileFragment) {
-                        navController.navigate(R.id.profileFragment)
-                        true
-                    } else {
-                        false
-                    }
-                }
+                R.id.searchFragment -> itemSelectNavigation(R.id.searchFragment)
+
+                R.id.profileFragment -> itemSelectNavigation(R.id.profileFragment)
+
+                R.id.chatFragment -> itemSelectNavigation(R.id.chatFragment)
 
                 else -> {
                     false
                 }
             }
+        }
+    }
+
+    private fun itemSelectNavigation(fragment: Int) : Boolean {
+        return if (navController.currentDestination?.id != fragment) {
+            navController.navigate(fragment)
+            true
+        } else {
+            false
         }
     }
 
