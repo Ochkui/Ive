@@ -14,7 +14,7 @@
 
     <item
         android:title="add"
-        android:id="@+id/add"
+        android:id="@+id/addPhotoFragment"
         android:icon="@drawable/add_photo_selector"/>
 
     <item

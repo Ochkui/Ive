@@ -55,13 +55,15 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         binding.btNav.setOnItemSelectedListener {
             when (it.itemId) {
 
-                R.id.discoverFragment -> itemSelectNavigation(R.id.discoverFragment)
+                R.id.discoverFragment -> itemSelectNavigation(it.itemId)
 
-                R.id.searchFragment -> itemSelectNavigation(R.id.searchFragment)
+                R.id.searchFragment -> itemSelectNavigation(it.itemId)
 
-                R.id.profileFragment -> itemSelectNavigation(R.id.profileFragment)
+                R.id.profileFragment -> itemSelectNavigation(it.itemId)
 
-                R.id.chatFragment -> itemSelectNavigation(R.id.chatFragment)
+                R.id.chatFragment -> itemSelectNavigation(it.itemId)
+
+                R.id.addPhotoFragment -> itemSelectNavigation(it.itemId)
 
                 else -> {
                     false
