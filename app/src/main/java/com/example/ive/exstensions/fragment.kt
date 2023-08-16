@@ -1,6 +1,5 @@
 package com.example.ive.exstensions
 
-import android.app.Activity
 import android.os.Build
 import android.os.Parcelable
 import android.view.WindowInsets
@@ -9,7 +8,6 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.example.ive.component.model.UserProfileViewData
 
 fun Fragment.toast(@StringRes massage:Int){
     Toast.makeText(context,massage, Toast.LENGTH_SHORT).show()

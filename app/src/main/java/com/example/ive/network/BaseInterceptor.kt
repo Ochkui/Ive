@@ -10,8 +10,7 @@ import okhttp3.Route
 class BaseInterceptor:Interceptor,Authenticator {
     private val baseHeaders = mapOf(
         AUTHORIZATION to "$CLIENT_ID ${BuildConfig.ACCESS_KEY}",
-        // todo improve
-        ACCEPT_VERSION to "v1"
+        ACCEPT_VERSION to VERSION
     )
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -36,5 +35,6 @@ class BaseInterceptor:Interceptor,Authenticator {
         const val AUTHORIZATION = "Authorization"
         const val ACCEPT_VERSION = "Accept-Version"
         const val CLIENT_ID = "Client-ID"
+        const val VERSION = "v1"
     }
 }

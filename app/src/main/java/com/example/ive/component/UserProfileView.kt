@@ -32,7 +32,7 @@ class UserProfileView(
         binding.viewData = userProfile
     }
 
-    fun setTextColor(@ColorInt color: Int){
+    fun setTextColor(@ColorInt color: Int) {
         with(binding) {
             tvName.setTextColor(color)
             tvTag.setTextColor(color)

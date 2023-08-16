@@ -12,7 +12,9 @@ class PhotoRepository @Inject constructor(
     private val api:PhotoApi
 ):BaseRepository(){
 
-    suspend fun getPhotos(orderBy:String = "latest",page: Int = 1, pageSize:Int = 10): ApiResponse<List<PhotoData>> {
+    suspend fun getPhotos(orderBy:String = ORDER_BY_LATEST
+                          ,page: Int = 1, pageSize:Int = 10
+    ): ApiResponse<List<PhotoData>> {
         return request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
     }
 
@@ -20,10 +22,13 @@ class PhotoRepository @Inject constructor(
         return request { api.getGallery(username) }
     }
 
-    suspend fun getSearchPhoto(query:String,countItem:Int,page:Int): ApiResponse<PhotoDataList> {
+    suspend fun getSearchPhoto(query:String,
+                               countItem:Int,page:Int
+    ): ApiResponse<PhotoDataList> {
         return request { api.getSearchPhoto(query,countItem,page) }
     }
 
-
-
+    companion object {
+        const val ORDER_BY_LATEST = "latest"
+    }
 }

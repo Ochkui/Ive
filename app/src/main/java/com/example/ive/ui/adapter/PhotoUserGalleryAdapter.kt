@@ -8,22 +8,23 @@ import com.example.ive.network.model.PhotoGallery
 import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
+typealias PhotoGalleryClickListener<T> = (T) -> Unit
 class PhotoUserGalleryAdapter(
-    val listener: OnclickListeners<PhotoGallery>
+    val listener: PhotoGalleryClickListener<PhotoGallery>
 ) : RecyclerView.Adapter<PhotoUserGalleryAdapter.ViewHolder>() {
 
     private val listPhoto = mutableListOf<PhotoGallery>()
 
     class ViewHolder(
-        val listener: OnclickListeners<PhotoGallery>,
+        val listener: PhotoGalleryClickListener<PhotoGallery>,
         val binding: RecyclerVerticalPhotoBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: PhotoGallery) {
             Picasso.get()
-                .load(item.cover_photo.urls?.regular)
+                .load(item.coverPhoto.urls?.regular)
                 .into(binding.aiImage)
-            binding.aiImage.setOnClickListener { listener.onClick(item) }
+            binding.aiImage.setOnClickListener { listener(item) }
         }
 
     }

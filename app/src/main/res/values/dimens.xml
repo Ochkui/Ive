@@ -8,6 +8,14 @@
     <dimen name="distance_between_button">9dp</dimen>
     <dimen name="profile_icon_size">28dp</dimen>
 
+    <!--    text-->
+    <dimen name="small_text_size">11sp</dimen>
+    <dimen name="main_text_size">13sp</dimen>
+    <dimen name="normal_text_size">15sp</dimen>
+    <dimen name="title_text_size">36sp</dimen>
+    <dimen name="big_label_text_size">48sp</dimen>
+
+
     <!--    bottom nav view-->
     <dimen name="bottom_nav_top_border_height">0.5dp</dimen>
     <dimen name="bottom_nav_min_height">40dp</dimen>

@@ -1,7 +1,6 @@
 package com.example.ive.binding
 
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 

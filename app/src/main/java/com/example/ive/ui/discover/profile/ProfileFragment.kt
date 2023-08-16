@@ -1,8 +1,5 @@
 package com.example.ive.ui.discover.profile
 
-import android.os.Bundle
-import android.util.Log
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -12,14 +9,11 @@ import com.example.ive.component.model.UserProfileViewData
 import com.example.ive.databinding.FragmentProfileBinding
 import com.example.ive.exstensions.showStatusBar
 import com.example.ive.exstensions.toast
-import com.example.ive.network.model.PhotoGallery
 import com.example.ive.network.model.toDataNews
 import com.example.ive.ui.adapter.PhotoUserGalleryAdapter
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.IProgressVisibility
-import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
@@ -31,18 +25,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private val viewModel: ProfileViewModel by viewModels()
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
-    // todo improve
-    private val adapterPhoto = PhotoUserGalleryAdapter(object : OnclickListeners<PhotoGallery> {
-        override fun onClick(item: PhotoGallery) {
-            val data = item.toDataNews()
-            navigate(R.id.photoFragment, bundleOf("data" to data))
-        }
-    })
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.i("ProfileFragment", "onCreate")
-    }
+    private val adapterPhoto = PhotoUserGalleryAdapter(
+        listener = { item -> navigate(ProfileFragmentDirections.profileToPhoto(item.toDataNews()))}
+    )
 
     override fun initViews() {
         showStatusBar()

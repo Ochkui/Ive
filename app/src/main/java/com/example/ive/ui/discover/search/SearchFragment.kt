@@ -1,27 +1,18 @@
 package com.example.ive.ui.discover.search
 
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ive.R
 import com.example.ive.databinding.FragmentSearchBinding
 import com.example.ive.exstensions.toast
-import com.example.ive.network.model.PhotoData
 import com.example.ive.network.model.toDataNews
 import com.example.ive.ui.adapter.SearchPhotoAdapter
 import com.example.ive.ui.base.BaseFragment
-import com.example.ive.ui.discover.INavigationBarVisibility
 import com.example.ive.ui.discover.IProgressVisibility
-import com.example.ive.ui.listeners.OnclickListeners
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,28 +20,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var request:String
-    // todo improve
-    private var isFunctionInitialized = false
-    // todo improve
-    private val adapterPhoto = SearchPhotoAdapter(object : OnclickListeners<PhotoData> {
-        override fun onClick(item: PhotoData) {
-            navigate(R.id.photoFragment, bundleOf("data" to item.toDataNews()))
-        }
-    })
-
+    private val adapterPhoto = SearchPhotoAdapter(
+        listener = { item -> navigate(SearchFragmentDirections.searchToPhoto(item.toDataNews())) }
+    )
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
-    // todo improve
-    private val visibilityNavBar: INavigationBarVisibility by lazy { activity as INavigationBarVisibility }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (!isFunctionInitialized){
-            super.initListeners()
-            super.initViews()
-            super.initListeners()
-        }
-    }
     override fun initViews() {
 
         with(binding) {

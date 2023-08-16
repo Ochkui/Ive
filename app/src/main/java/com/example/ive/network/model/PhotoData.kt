@@ -26,8 +26,8 @@ class PhotoDataList(
 @Parcelize
 class PhotoGallery(
     val id: String,
-    //todo improve
-    val cover_photo: CoverPhoto,
+    @SerializedName("cover_photo")
+    val coverPhoto: CoverPhoto,
     val user: User
 
 ) : Parcelable
@@ -70,7 +70,6 @@ class Urls(
 
     ) : Parcelable
 
-
 fun PhotoData.toDataNews() = DataNews(
     user = UserProfileViewData(user.profileImage?.large, user.name, user.username, user.location),
     imageUrls = urls.regular,
@@ -78,23 +77,9 @@ fun PhotoData.toDataNews() = DataNews(
     location = location
 )
 
-fun User.toUserProfileViewData() = UserProfileViewData(
-    image = profileImage?.large,
-    name = name,
-    tag = username,
-    location = location
-)
-
-//fun PhotoDataList.toDataNews() = DataNews(
-//    user = UserProfileViewData(list.user.profileImage?.large, list.user.name, list.user.username, list.user.location),
-//    imageUrls = list.urls.regular,
-//    photoId = list.id,
-//    location = list.location
-//)
-
 fun PhotoGallery.toDataNews() = DataNews(
     user = UserProfileViewData(user.profileImage?.large, user.name, user.username, user.location),
-    imageUrls = cover_photo.urls?.regular,
+    imageUrls = coverPhoto.urls?.regular,
     photoId = id,
     location = user.location
 )

@@ -55,7 +55,7 @@
                     android:layout_marginTop="@dimen/margin_to_title"
                     android:text="@{viewData.location}"
                     android:textAllCaps="true"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/main_text_size"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,20 +87,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bt_follow_to"
                     tools:listitem="@layout/recycler_vertical_photo" />
-
-<!--                <androidx.appcompat.widget.AppCompatButton-->
-<!--                    android:id="@+id/bt_see_more"-->
-<!--                    style="@style/ButtonWhite"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:visibility="invisible"-->
-<!--                    android:layout_marginStart="@dimen/margin_horizontal"-->
-<!--                    android:layout_marginEnd="@dimen/margin_horizontal"-->
-<!--                    android:layout_marginBottom="@dimen/margin_to_title"-->
-<!--                    android:text="@string/see_more"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

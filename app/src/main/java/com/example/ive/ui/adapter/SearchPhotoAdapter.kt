@@ -8,15 +8,16 @@ import com.example.ive.network.model.PhotoData
 import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
+typealias SearchClickListener<T> = (T) -> Unit
 class SearchPhotoAdapter(
-    val listener: OnclickListeners<PhotoData>
+    val listener: SearchClickListener<PhotoData>
 ) : RecyclerView.Adapter<SearchPhotoAdapter.ViewHolder>() {
 
     private var listPhoto = mutableListOf<PhotoData>()
     private var request:String? = null
 
     class ViewHolder(
-        val listener: OnclickListeners<PhotoData>,
+        val listener: SearchClickListener<PhotoData>,
         val binding: RecyclerVerticalSearchItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -24,7 +25,7 @@ class SearchPhotoAdapter(
             Picasso.get()
                 .load(item.urls.regular)
                 .into(binding.aiImage)
-            binding.aiImage.setOnClickListener { listener.onClick(item) }
+            binding.aiImage.setOnClickListener { listener(item) }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

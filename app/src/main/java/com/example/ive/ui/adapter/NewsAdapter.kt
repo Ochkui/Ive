@@ -1,15 +1,12 @@
 package com.example.ive.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ive.component.model.DataNews
 import com.example.ive.databinding.RecyclerHorizontalItemBinding
-import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
 typealias NewsClickListener<T> = (T) -> Unit
@@ -46,7 +43,6 @@ class NewsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.i("NewsAdapter", "$itemCount")
         getItem(position)?.let { holder.bind(it) }
     }
 

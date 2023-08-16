@@ -1,17 +1,10 @@
 package com.example.ive.network
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.ive.api.PhotoApi
 import com.example.ive.component.model.DataNews
-import com.example.ive.network.model.PhotoData
 import com.example.ive.network.model.toDataNews
 import com.example.ive.repository.PhotoRepository
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import retrofit2.HttpException
-import java.lang.Exception
 import javax.inject.Inject
 
 class PhotoNewsPagingSource @Inject constructor(
@@ -29,8 +22,6 @@ class PhotoNewsPagingSource @Inject constructor(
             )
             when (users) {
                 is ApiResponse.Success -> {
-// todo improve
-                    Log.i("PhotoNewsPagingSource", "${params.loadSize} = size")
                     return LoadResult.Page(
                         data = users.data.map { it.toDataNews() },
                         prevKey = if (currentPage == 1) null else currentPage -1,
@@ -38,7 +29,6 @@ class PhotoNewsPagingSource @Inject constructor(
                     )
                 }
                 is ApiResponse.Error -> {
-                    Log.i("PhotoNewsPagingSource", users.error)
                     LoadResult.Error(IllegalArgumentException())
                 }
             }
@@ -50,9 +40,7 @@ class PhotoNewsPagingSource @Inject constructor(
 
     override fun getRefreshKey(state: PagingState<Int, DataNews>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
-        // convert item index to page index:
         val page = state.closestPageToPosition(anchorPosition) ?: return null
-        // page doesn't have 'currentKey' property, so need to calculate it manually:
         return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
     }
 }
