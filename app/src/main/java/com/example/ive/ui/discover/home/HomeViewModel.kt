@@ -1,6 +1,5 @@
 package com.example.ive.ui.discover.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.concurrent.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,9 +30,6 @@ class HomeViewModel @Inject constructor(
 
         object None : UiState()
     }
-// todo improve
-//    private val _news = MutableLiveData<List<DataNews>>()
-//    val news: LiveData<List<DataNews>> = _news
 
     private val _popular = MutableLiveData<List<DataNews>>()
     val popular: LiveData<List<DataNews>> = _popular
@@ -43,37 +38,30 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> = _uiState
-    // todo improve
-    private val pageSize = 5
+    private val pageSize = PAGE_SIZE
 
-    val pagingDataFlow: kotlinx.coroutines.flow.Flow<PagingData<DataNews>> = Pager(
-        config = PagingConfig(pageSize = pageSize),
-        pagingSourceFactory = { PhotoNewsPagingSource(photoRepository, pageSize) }
-    ).flow
-        .cachedIn(viewModelScope)
-        .stateIn(viewModelScope, SharingStarted.Lazily,PagingData.empty())
+    lateinit var pagingDataFlow: kotlinx.coroutines.flow.Flow<PagingData<DataNews>>
 
     init {
         getPhotoPopular()
         getPhotoNews()
+        getPagingData()
+    }
+
+    private fun getPagingData() {
+        pagingDataFlow = Pager(
+            config = PagingConfig(pageSize = pageSize),
+            pagingSourceFactory = { PhotoNewsPagingSource(photoRepository, pageSize) }
+        ).flow
+            .cachedIn(viewModelScope)
+            .stateIn(viewModelScope, SharingStarted.Lazily,PagingData.empty())
     }
 
     private fun getPhotoNews(){
         _uiState.postValue(UiState.Loading)
-// todo improve
-//        viewModelScope.launch{
-//            when (val result = photoRepository.getPhotos()) {
-//
-//                is ApiResponse.Error -> _uiState.postValue(UiState.Error(result.error))
-//                is ApiResponse.Success -> {
-//                    Log.i("HomeViewModel", "give list news")
-//                    _news.postValue(result.data.map { it.toDataNews() })
-//                }
-//            }
-//        }
+
     }
 
-    // todo improve
     fun getPhotoPopular(){
         ++currentPage
         _uiState.postValue(UiState.Loading)
@@ -84,8 +72,7 @@ class HomeViewModel @Inject constructor(
             )) {
                 is ApiResponse.Error -> _uiState.postValue(UiState.Error(result.error))
                 is ApiResponse.Success -> {
-                    // todo improve
-                    Log.i("HomeViewModel", "give list photo")
+
                     _popular.postValue(result.data.map { it.toDataNews() })
                 }
             }
@@ -95,11 +82,16 @@ class HomeViewModel @Inject constructor(
     fun refresh(){
         currentPage = 0
         getPhotoPopular()
+        getPagingData()
     }
     fun resetState(){
         _uiState.postValue(UiState.None)
-//        _news.postValue(emptyList())
         _popular.postValue(emptyList())
+        getPagingData()
+    }
+
+    companion object{
+        const val PAGE_SIZE = 5
     }
 
 }

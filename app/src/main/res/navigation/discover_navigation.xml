@@ -11,22 +11,18 @@
         android:name="com.example.ive.ui.discover.home.HomeFragment"
         android:label="DiscoverFragment" >
 
+        <argument
+            android:name="dataNews"
+            app:nullable="true"
+            app:argType="com.example.ive.component.model.DataNews"/>
+
         <action
             android:id="@+id/home_to_profile"
-            app:destination="@id/profileFragment">
-            <argument
-                android:name="dataNews"
-                app:nullable="true"
-                app:argType="com.example.ive.component.model.DataNews"/>
-        </action>
+            app:destination="@id/profileFragment"/>
 
         <action
             android:id="@+id/home_to_photo"
-            app:destination="@id/photoFragment">
-            <argument
-                android:name="dataNews"
-                app:argType="com.example.ive.component.model.DataNews" />
-        </action>
+            app:destination="@id/photoFragment"/>
     </fragment>
 
     <fragment
@@ -37,11 +33,11 @@
 
         <action
             android:id="@+id/search_to_photo"
-            app:destination="@id/photoFragment">
-            <argument
-                android:name="dataNews"
-                app:argType="com.example.ive.component.model.DataNews" />
-        </action>
+            app:destination="@id/photoFragment"/>
+
+        <argument
+            android:name="dataNews"
+            app:argType="com.example.ive.component.model.DataNews" />
     </fragment>
 
     <fragment
@@ -54,11 +50,8 @@
             android:id="@+id/photo_to_profile"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/photoFragment"
-            app:popUpToInclusive="true">
-            <argument
-                android:name="dataNews"
-                app:argType="com.example.ive.component.model.DataNews" />
-        </action>
+            app:popUpToInclusive="true"/>
+
         <argument
             android:name="dataNews"
             app:argType="com.example.ive.component.model.DataNews" />
@@ -72,11 +65,7 @@
 
         <action
             android:id="@+id/profile_to_photo"
-            app:destination="@id/photoFragment">
-            <argument
-                android:name="dataNews"
-                app:argType="com.example.ive.component.model.DataNews" />
-        </action>
+            app:destination="@id/photoFragment"/>
 
         <argument
             android:name="dataNews"
