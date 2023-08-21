@@ -2,6 +2,7 @@ package com.example.ive.ui.discover.home
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.databinding.FragmentHomeBinding
@@ -100,7 +101,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initListeners() {
         binding.swRefresh.setOnRefreshListener {
-            adapterNews.refresh()
+
+            lifecycleScope.launch {
+                viewModel.pagingDataFlow.collectLatest { pagingData ->
+                    adapterNews.submitData(PagingData.empty())
+                    adapterNews.submitData(pagingData)
+                }
+            }
+
             adapterPhoto.removeList()
             viewModel.refresh()
         }
@@ -116,7 +124,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onStop()
         // todo improve SingleLiveEvent
         viewModel.resetState()
-//        adapterNews.refresh()
     }
 
 }

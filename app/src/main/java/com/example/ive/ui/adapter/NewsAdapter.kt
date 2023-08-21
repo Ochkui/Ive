@@ -14,7 +14,7 @@ typealias NewsClickListener<T> = (T) -> Unit
 class NewsAdapter(
     private val userProfileListeners: NewsClickListener<DataNews>,
     private val imageListener:NewsClickListener<DataNews>
-): PagingDataAdapter<DataNews, NewsAdapter.ViewHolder>(DiffCallback) {
+): PagingDataAdapter<DataNews, NewsAdapter.ViewHolder>(diffCallback) {
 
     class ViewHolder(
         private val imageListener: NewsClickListener<DataNews>,
@@ -47,7 +47,7 @@ class NewsAdapter(
     }
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<DataNews>() {
+        private val diffCallback = object : DiffUtil.ItemCallback<DataNews>() {
             override fun areItemsTheSame(oldItem: DataNews, newItem: DataNews): Boolean {
                 return oldItem.photoId == newItem.photoId
             }

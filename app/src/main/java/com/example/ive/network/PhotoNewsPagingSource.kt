@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class PhotoNewsPagingSource @Inject constructor(
     private val repository: PhotoRepository,
-    private val pageSize: Int
     ): PagingSource<Int,DataNews>(){
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataNews> {
@@ -25,7 +24,7 @@ class PhotoNewsPagingSource @Inject constructor(
                     return LoadResult.Page(
                         data = users.data.map { it.toDataNews() },
                         prevKey = if (currentPage == 1) null else currentPage -1,
-                        nextKey = if (users.data.size == params.loadSize) currentPage + (params.loadSize / pageSize) else null
+                        nextKey = if (users.data.size < params.loadSize)  null else currentPage + 1
                     )
                 }
                 is ApiResponse.Error -> {
@@ -39,8 +38,6 @@ class PhotoNewsPagingSource @Inject constructor(
     }
 
     override fun getRefreshKey(state: PagingState<Int, DataNews>): Int? {
-        val anchorPosition = state.anchorPosition ?: return null
-        val page = state.closestPageToPosition(anchorPosition) ?: return null
-        return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
+        return null
     }
 }

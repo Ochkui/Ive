@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
     private fun getPagingData() {
         val data = Pager(
             config = PagingConfig(pageSize = pageSize),
-            pagingSourceFactory = { PhotoNewsPagingSource(photoRepository, pageSize) }
+            pagingSourceFactory = { PhotoNewsPagingSource(photoRepository) }
         ).flow
             .cachedIn(viewModelScope)
         pagingDataFlow = data
