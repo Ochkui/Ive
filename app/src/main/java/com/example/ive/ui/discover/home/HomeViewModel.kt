@@ -12,17 +12,16 @@ import com.example.ive.component.model.DataNews
 import com.example.ive.network.ApiResponse
 import com.example.ive.network.PhotoNewsPagingSource
 import com.example.ive.network.model.toDataNews
-import com.example.ive.network.model.toPhotoEntity
 import com.example.ive.repository.PhotoRepository
+import com.example.ive.utils.NetworkChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val photoRepository: PhotoRepository
+    private val photoRepository: PhotoRepository,
+    networkChecker: NetworkChecker
 ): ViewModel() {
 
     sealed class UiState{
@@ -31,6 +30,7 @@ class HomeViewModel @Inject constructor(
 
         object None : UiState()
     }
+    val isConnected: LiveData<Boolean> = networkChecker
 
     private val _popular = MutableLiveData<List<DataNews>>()
     val popular: LiveData<List<DataNews>> = _popular
@@ -50,12 +50,12 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getPagingData() {
-        pagingDataFlow = Pager(
+        val data = Pager(
             config = PagingConfig(pageSize = pageSize),
             pagingSourceFactory = { PhotoNewsPagingSource(photoRepository, pageSize) }
         ).flow
             .cachedIn(viewModelScope)
-            .stateIn(viewModelScope, SharingStarted.Lazily,PagingData.empty())
+        pagingDataFlow = data
     }
 
     private fun getPhotoNews(){

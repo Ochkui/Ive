@@ -7,6 +7,7 @@ import com.example.ive.api.PhotoApi
 import com.example.ive.dao.PhotoDao
 import com.example.ive.data.AppDataBase
 import com.example.ive.network.BaseInterceptor
+import com.example.ive.utils.NetworkChecker
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +21,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideNetworkChecker(@ApplicationContext context: Context): NetworkChecker {
+        return NetworkChecker(context)
+    }
 
     @Provides
     @Singleton

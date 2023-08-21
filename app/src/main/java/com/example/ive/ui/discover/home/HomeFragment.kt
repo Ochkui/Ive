@@ -32,6 +32,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
 
     override fun initObservers() {
+        viewModel.isConnected.observe(viewLifecycleOwner){
+            if (!it){
+                binding.swRefresh.isEnabled = false
+                binding.swRefresh.isRefreshing = true
+            } else {
+                binding.swRefresh.isEnabled = true
+                binding.swRefresh.isRefreshing = false
+            }
+        }
+
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
 
@@ -106,7 +116,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onStop()
         // todo improve SingleLiveEvent
         viewModel.resetState()
-        adapterNews.refresh()
+//        adapterNews.refresh()
     }
 
 }
