@@ -12,6 +12,7 @@ import com.example.ive.component.model.DataNews
 import com.example.ive.network.ApiResponse
 import com.example.ive.network.PhotoNewsPagingSource
 import com.example.ive.network.model.toDataNews
+import com.example.ive.network.model.toPhotoEntity
 import com.example.ive.repository.PhotoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted

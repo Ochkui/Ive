@@ -1,10 +1,26 @@
 package com.example.ive.network.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.ive.component.model.DataNews
 import com.example.ive.component.model.UserProfileViewData
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+
+
+@Entity(tableName = "photos")
+@Parcelize
+data class PhotoEntity(
+    var request: String?,
+    @PrimaryKey
+    val id: String,
+    val urls: Urls,
+    val user: User,
+    val location: String?,
+    val orderBy: String
+
+) : Parcelable
 
 @Parcelize
 data class PhotoData(
@@ -82,4 +98,24 @@ fun PhotoGallery.toDataNews() = DataNews(
     imageUrls = coverPhoto.urls?.regular,
     photoId = id,
     location = user.location
+)
+
+fun PhotoEntity.toDataNews() = DataNews(
+    user = UserProfileViewData(
+        user.profileImage?.large,
+        user.name,
+        user.username,
+        user.location),
+    imageUrls = urls.regular,
+    photoId = id,
+    location = location
+)
+
+fun PhotoData.toPhotoEntity(orderBy: String) = PhotoEntity(
+    request = request,
+    id = id,
+    urls = urls,
+    user = user,
+    location = location,
+    orderBy = orderBy
 )
