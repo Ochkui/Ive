@@ -36,6 +36,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun initObservers() {
 
         viewModel.isConnected.observe(viewLifecycleOwner){
+            if (!it){
+                toast("No Connection!")
+            }
             checkNetWork(it)
         }
 
@@ -43,7 +46,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             when (it) {
 
                 is HomeViewModel.UiState.Error -> {
-                    toast(it.message)
                     iProgressBar.visibleProgress(false)
                 }
 
@@ -59,16 +61,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         viewModel.popular.observe(viewLifecycleOwner) {
             adapterPhoto.submitList(it)
-            binding.swRefresh.isRefreshing = false
+
+            if (viewModel.networkChecker.isInternetAvailable()){
+                binding.swRefresh.isRefreshing = false
+            }
             iProgressBar.visibleProgress(false)
         }
-        getDataNews()
+
+        viewModel.latest.observe(viewLifecycleOwner){
+            viewLifecycleOwner.lifecycleScope.launch{
+                adapterNews.submitData(PagingData.from(it))
+            }
+        }
+
     }
 
     override fun initViews() {
-        val isConnected = viewModel.isConnected.value ?: false
-        checkNetWork(isConnected)
         showStatusBar()
+        checkNetWork(viewModel.networkChecker.isInternetAvailable())
         iProgressBar.visibleProgress(true)
         val stLayoutManager = StaggeredGridLayoutManager(
             2, StaggeredGridLayoutManager.VERTICAL
@@ -80,6 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     requireContext(), LinearLayoutManager.HORIZONTAL, false
                 )
                 adapter = adapterNews
+                getDataNews()
             }
 
             rvListPhoto.apply {
@@ -87,7 +98,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 setHasFixedSize(false)
                 layoutManager = stLayoutManager
                 adapter = adapterPhoto
-                getDataNews()
+            }
+        }
+    }
+
+    private fun getDataNews(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagingDataFlow.collectLatest { pagingData ->
+                adapterNews.submitData(pagingData)
             }
         }
     }
@@ -97,12 +115,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             binding.btSeeMore.visibility = View.GONE
             binding.swRefresh.isEnabled = false
             binding.swRefresh.isRefreshing = true
-            toast("No connection!")
         } else {
             binding.btSeeMore.visibility = View.VISIBLE
             binding.swRefresh.isEnabled = true
             binding.swRefresh.isRefreshing = false
-            toast("Connection!")
         }
     }
 
@@ -115,15 +131,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         binding.btSeeMore.setOnClickListener {
             viewModel.getPhotoPopular()
-        }
-    }
-
-    private fun getDataNews(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.pagingDataFlow.collectLatest { pagingData ->
-                adapterNews.submitData(PagingData.empty())
-                adapterNews.submitData(pagingData)
-            }
         }
     }
 

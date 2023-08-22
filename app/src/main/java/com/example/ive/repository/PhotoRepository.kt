@@ -8,6 +8,7 @@ import com.example.ive.network.model.PhotoData
 import com.example.ive.network.model.PhotoDataList
 import com.example.ive.network.model.PhotoEntity
 import com.example.ive.network.model.PhotoGallery
+import com.example.ive.network.model.toPhotoData
 import com.example.ive.utils.NetworkChecker
 import javax.inject.Inject
 
@@ -17,14 +18,15 @@ class PhotoRepository @Inject constructor(
     private val networkChecker: NetworkChecker
 ):BaseRepository(){
 
-    suspend fun getPhotosLatest(orderBy:String = ORDER_BY_LATEST, page: Int = 1, pageSize:Int = 10
+    suspend fun getPhotos(orderBy:String = ORDER_BY_POPULAR, page: Int = 1, pageSize:Int = 10
     ): ApiResponse<List<PhotoData>> {
-        return request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
-    }
+        return if (networkChecker.isInternetAvailable()){
+             request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
+        } else {
+            val data = getPhotosDao(orderBy).map { it.toPhotoData() }
+            return ApiResponse.Success(data)
+        }
 
-    suspend fun getPhotosPopular(orderBy:String = ORDER_BY_POPULAR, page: Int = 1, pageSize:Int = 10
-    ): ApiResponse<List<PhotoData>> {
-        return request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
     }
 
     suspend fun getGalleries(username: String):ApiResponse<List<PhotoGallery>>{
@@ -45,12 +47,11 @@ class PhotoRepository @Inject constructor(
         photoDao.insertPhoto(photoData)
     }
 
-    private suspend fun clearPhotos(){
+    suspend fun clearPhotos(){
         photoDao.clearPhotos()
     }
 
     companion object {
-        const val ORDER_BY_LATEST = "latest"
         const val ORDER_BY_POPULAR = "popular"
     }
 }

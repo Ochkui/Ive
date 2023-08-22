@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.ive.component.model.DataNews
 import com.example.ive.network.model.toDataNews
+import com.example.ive.network.model.toPhotoEntity
 import com.example.ive.repository.PhotoRepository
 import javax.inject.Inject
 
@@ -15,13 +16,14 @@ class PhotoNewsPagingSource @Inject constructor(
 
         val currentPage = params.key ?: 1
         return try {
-            val users = repository.getPhotosPopular(
+            val users = repository.getPhotos(
                 page = currentPage,
                 pageSize = params.loadSize,
                 orderBy = "latest"
             )
             when (users) {
                 is ApiResponse.Success -> {
+                    repository.insertPhotoDao(users.data.map { it.toPhotoEntity("latest") })
                     return LoadResult.Page(
                         data = users.data.map { it.toDataNews() },
                         prevKey = if (currentPage == 1) null else currentPage -1,
@@ -39,6 +41,9 @@ class PhotoNewsPagingSource @Inject constructor(
     }
 
     override fun getRefreshKey(state: PagingState<Int, DataNews>): Int? {
-        return null
+        return state.anchorPosition?.let {
+            state.closestPageToPosition(it)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
+        }
     }
 }
