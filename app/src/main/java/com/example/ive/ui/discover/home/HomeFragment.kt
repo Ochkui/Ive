@@ -87,6 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 setHasFixedSize(false)
                 layoutManager = stLayoutManager
                 adapter = adapterPhoto
+                getDataNews()
             }
         }
     }

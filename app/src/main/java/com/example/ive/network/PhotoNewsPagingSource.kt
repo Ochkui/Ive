@@ -15,9 +15,10 @@ class PhotoNewsPagingSource @Inject constructor(
 
         val currentPage = params.key ?: 1
         return try {
-            val users = repository.getPhotosLatest(
+            val users = repository.getPhotosPopular(
                 page = currentPage,
-                pageSize = params.loadSize
+                pageSize = params.loadSize,
+                orderBy = "latest"
             )
             when (users) {
                 is ApiResponse.Success -> {
