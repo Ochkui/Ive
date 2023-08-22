@@ -1,5 +1,6 @@
 package com.example.ive.ui.discover.home
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
@@ -33,14 +34,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
 
     override fun initObservers() {
+
         viewModel.isConnected.observe(viewLifecycleOwner){
-            if (!it){
-                binding.swRefresh.isEnabled = false
-                binding.swRefresh.isRefreshing = true
-            } else {
-                binding.swRefresh.isEnabled = true
-                binding.swRefresh.isRefreshing = false
-            }
+            checkNetWork(it)
         }
 
         viewModel.uiState.observe(viewLifecycleOwner) {
@@ -66,16 +62,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             binding.swRefresh.isRefreshing = false
             iProgressBar.visibleProgress(false)
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.pagingDataFlow.collectLatest { pagingData ->
-                adapterNews.submitData(pagingData)
-            }
-        }
+        getDataNews()
     }
 
     override fun initViews() {
-
+        val isConnected = viewModel.isConnected.value ?: false
+        checkNetWork(isConnected)
         showStatusBar()
         iProgressBar.visibleProgress(true)
         val stLayoutManager = StaggeredGridLayoutManager(
@@ -99,22 +91,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    private fun checkNetWork(isConnected: Boolean){
+        if (!isConnected) {
+            binding.btSeeMore.visibility = View.GONE
+            binding.swRefresh.isEnabled = false
+            binding.swRefresh.isRefreshing = true
+            toast("No connection!")
+        } else {
+            binding.btSeeMore.visibility = View.VISIBLE
+            binding.swRefresh.isEnabled = true
+            binding.swRefresh.isRefreshing = false
+            toast("Connection!")
+        }
+    }
+
     override fun initListeners() {
         binding.swRefresh.setOnRefreshListener {
-
-            lifecycleScope.launch {
-                viewModel.pagingDataFlow.collectLatest { pagingData ->
-                    adapterNews.submitData(PagingData.empty())
-                    adapterNews.submitData(pagingData)
-                }
-            }
-
+            getDataNews()
             adapterPhoto.removeList()
             viewModel.refresh()
         }
 
         binding.btSeeMore.setOnClickListener {
             viewModel.getPhotoPopular()
+        }
+    }
+
+    private fun getDataNews(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagingDataFlow.collectLatest { pagingData ->
+                adapterNews.submitData(PagingData.empty())
+                adapterNews.submitData(pagingData)
+            }
         }
     }
 

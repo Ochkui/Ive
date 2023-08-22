@@ -100,14 +100,11 @@ fun PhotoGallery.toDataNews() = DataNews(
     location = user.location
 )
 
-fun PhotoEntity.toDataNews() = DataNews(
-    user = UserProfileViewData(
-        user.profileImage?.large,
-        user.name,
-        user.username,
-        user.location),
-    imageUrls = urls.regular,
-    photoId = id,
+fun PhotoEntity.toPhotoData() = PhotoData(
+    user = user,
+    id = id,
+    request = request,
+    urls = urls,
     location = location
 )
 

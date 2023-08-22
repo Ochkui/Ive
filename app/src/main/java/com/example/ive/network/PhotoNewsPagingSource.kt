@@ -15,7 +15,7 @@ class PhotoNewsPagingSource @Inject constructor(
 
         val currentPage = params.key ?: 1
         return try {
-            val users = repository.getPhotos(
+            val users = repository.getPhotosLatest(
                 page = currentPage,
                 pageSize = params.loadSize
             )

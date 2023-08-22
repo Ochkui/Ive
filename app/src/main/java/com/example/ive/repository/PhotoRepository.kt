@@ -8,15 +8,21 @@ import com.example.ive.network.model.PhotoData
 import com.example.ive.network.model.PhotoDataList
 import com.example.ive.network.model.PhotoEntity
 import com.example.ive.network.model.PhotoGallery
+import com.example.ive.utils.NetworkChecker
 import javax.inject.Inject
 
 class PhotoRepository @Inject constructor(
     private val api:PhotoApi,
-    private val photoDao: PhotoDao
+    private val photoDao: PhotoDao,
+    private val networkChecker: NetworkChecker
 ):BaseRepository(){
 
-    suspend fun getPhotos(orderBy:String = ORDER_BY_LATEST
-                          ,page: Int = 1, pageSize:Int = 10
+    suspend fun getPhotosLatest(orderBy:String = ORDER_BY_LATEST, page: Int = 1, pageSize:Int = 10
+    ): ApiResponse<List<PhotoData>> {
+        return request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
+    }
+
+    suspend fun getPhotosPopular(orderBy:String = ORDER_BY_POPULAR, page: Int = 1, pageSize:Int = 10
     ): ApiResponse<List<PhotoData>> {
         return request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
     }
@@ -31,7 +37,7 @@ class PhotoRepository @Inject constructor(
         return request { api.getSearchPhoto(query,countItem,page) }
     }
 
-    suspend fun getPhotosDao(orderBy: String): List<PhotoEntity> {
+    private suspend fun getPhotosDao(orderBy: String): List<PhotoEntity> {
         return photoDao.getAllPhotos(orderBy)
     }
 
@@ -39,7 +45,12 @@ class PhotoRepository @Inject constructor(
         photoDao.insertPhoto(photoData)
     }
 
+    private suspend fun clearPhotos(){
+        photoDao.clearPhotos()
+    }
+
     companion object {
         const val ORDER_BY_LATEST = "latest"
+        const val ORDER_BY_POPULAR = "popular"
     }
 }

@@ -1,5 +1,6 @@
 package com.example.ive.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.ive.BuildConfig
@@ -24,7 +25,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNetworkChecker(@ApplicationContext context: Context): NetworkChecker {
+    fun provideNetworkChecker(context: Application): NetworkChecker {
         return NetworkChecker(context)
     }
 
