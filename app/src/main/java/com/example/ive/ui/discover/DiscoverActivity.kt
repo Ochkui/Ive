@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisibility,
-    INavigationBarVisibility {
+    INavigationBarVisibility, IToolbarVisibility {
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -27,6 +27,8 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     private fun initView() {
         navigationBarVisibility(true)
+        setSupportActionBar(binding.myToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_container_discover) as NavHostFragment
@@ -89,6 +91,14 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     override fun navigationBarVisibility(isVisibility: Boolean) {
         binding.isNavBarVisible = isVisibility
+    }
+
+    override fun toolbarVisibility(isVisible: Boolean) {
+        if (isVisible){
+            binding.myToolbar.visibility = View.VISIBLE
+        } else {
+            binding.myToolbar.visibility = View.GONE
+        }
     }
 
 }

@@ -15,6 +15,24 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/my_toolbar"
+            android:background="#FFC107"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="No connections"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_container_discover"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -24,7 +42,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bt_nav"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
             app:navGraph="@navigation/discover_navigation" />
 
         <ProgressBar

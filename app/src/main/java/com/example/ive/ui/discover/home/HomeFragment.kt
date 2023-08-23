@@ -13,6 +13,7 @@ import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.IProgressVisibility
+import com.example.ive.ui.discover.IToolbarVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,6 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     )
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
+    private val iToolbar: IToolbarVisibility by lazy { activity as IToolbarVisibility }
 
     override fun initObservers() {
 
@@ -112,13 +114,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun checkNetWork(isConnected: Boolean){
         if (!isConnected) {
+            iToolbar.toolbarVisibility(true)
             binding.btSeeMore.visibility = View.GONE
             binding.swRefresh.isEnabled = false
-            binding.swRefresh.isRefreshing = true
         } else {
+            iToolbar.toolbarVisibility(false)
             binding.btSeeMore.visibility = View.VISIBLE
             binding.swRefresh.isEnabled = true
-            binding.swRefresh.isRefreshing = false
         }
     }
 
