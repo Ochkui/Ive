@@ -1,7 +1,9 @@
 package com.example.ive.ui.discover.profile
 
 import android.opengl.Visibility
+import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -14,6 +16,7 @@ import com.example.ive.exstensions.toast
 import com.example.ive.network.model.toDataNews
 import com.example.ive.ui.adapter.PhotoUserGalleryAdapter
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.DiscoverSharedViewModel
 import com.example.ive.ui.discover.IProgressVisibility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +29,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    private val sharedViewModel: DiscoverSharedViewModel by activityViewModels()
+
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
 
     private val adapterPhoto = PhotoUserGalleryAdapter(
@@ -34,6 +39,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun initViews() {
         showStatusBar()
+        checkNetWork(sharedViewModel.networkChecker.isInternetAvailable())
         iProgressBar.visibleProgress(true)
         with(binding) {
             rvGallery.layoutManager =
@@ -44,12 +50,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         dataNews = try {
             args.dataNews
         } catch (e:Exception){
+            iProgressBar.visibleProgress(false)
             null
         }
         getGalleries(dataNews?.user)
     }
 
     override fun initObservers() {
+        sharedViewModel.isConnected.observe(viewLifecycleOwner){
+            checkNetWork(it)
+        }
+
         viewModel.uiState.observe(viewLifecycleOwner){
             when(it){
                 is ProfileViewModel.UiState.Error -> {
@@ -77,6 +88,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.swRefresh.setOnRefreshListener {
             adapterPhoto.removeList()
             getGalleries(dataNews?.user)
+        }
+    }
+
+    private fun checkNetWork(isConnected: Boolean){
+        if (!isConnected) {
+            binding.swRefresh.isEnabled = false
+            iProgressBar.visibleProgress(false)
+        } else {
+            binding.swRefresh.isEnabled = true
         }
     }
     private fun getGalleries(user: UserProfileViewData?) {

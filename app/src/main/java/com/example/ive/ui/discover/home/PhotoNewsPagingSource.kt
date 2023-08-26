@@ -1,8 +1,9 @@
-package com.example.ive.network
+package com.example.ive.ui.discover.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.ive.component.model.DataNews
+import com.example.ive.network.ApiResponse
 import com.example.ive.network.model.toDataNews
 import com.example.ive.network.model.toPhotoEntity
 import com.example.ive.repository.PhotoRepository

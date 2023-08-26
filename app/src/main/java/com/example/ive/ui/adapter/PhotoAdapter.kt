@@ -28,7 +28,6 @@ class PhotoAdapter(
 
     fun submitList(list: List<DataNews>) {
         listPhoto.addAll(list)
-        // todo improve
         notifyDataSetChanged()
     }
     fun removeList(){

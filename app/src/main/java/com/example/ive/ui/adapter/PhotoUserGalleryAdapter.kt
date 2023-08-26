@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ive.databinding.RecyclerVerticalPhotoBinding
 import com.example.ive.network.model.PhotoGallery
-import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
 typealias PhotoGalleryClickListener<T> = (T) -> Unit

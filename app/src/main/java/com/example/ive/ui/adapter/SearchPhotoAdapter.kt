@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ive.databinding.RecyclerVerticalSearchItemBinding
 import com.example.ive.network.model.PhotoData
-import com.example.ive.ui.listeners.OnclickListeners
 import com.squareup.picasso.Picasso
 
 typealias SearchClickListener<T> = (T) -> Unit

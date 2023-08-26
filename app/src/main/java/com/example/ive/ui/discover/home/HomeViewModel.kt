@@ -9,7 +9,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.ive.component.model.DataNews
 import com.example.ive.network.ApiResponse
-import com.example.ive.network.PhotoNewsPagingSource
 import com.example.ive.network.model.toDataNews
 import com.example.ive.network.model.toPhotoEntity
 import com.example.ive.repository.PhotoRepository

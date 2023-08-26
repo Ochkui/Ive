@@ -13,15 +13,16 @@ import com.example.ive.utils.NetworkChecker
 import javax.inject.Inject
 
 class PhotoRepository @Inject constructor(
-    private val api:PhotoApi,
+    private val api: PhotoApi,
     private val photoDao: PhotoDao,
     private val networkChecker: NetworkChecker
-):BaseRepository(){
+) : BaseRepository() {
 
-    suspend fun getPhotos(orderBy:String = ORDER_BY_POPULAR, page: Int = 1, pageSize:Int = 10
+    suspend fun getPhotos(
+        orderBy: String = ORDER_BY_POPULAR, page: Int = 1, pageSize: Int = 10
     ): ApiResponse<List<PhotoData>> {
-        return if (networkChecker.isInternetAvailable()){
-             request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
+        return if (networkChecker.isInternetAvailable()) {
+            request { api.getPhoto(orderBy, page = page, pageSize = pageSize) }
         } else {
             val data = getPhotosDao(orderBy).map { it.toPhotoData() }
             return ApiResponse.Success(data)
@@ -29,14 +30,15 @@ class PhotoRepository @Inject constructor(
 
     }
 
-    suspend fun getGalleries(username: String):ApiResponse<List<PhotoGallery>>{
+    suspend fun getGalleries(username: String): ApiResponse<List<PhotoGallery>> {
         return request { api.getGallery(username) }
     }
 
-    suspend fun getSearchPhoto(query:String,
-                               countItem:Int,page:Int
+    suspend fun getSearchPhoto(
+        query: String,
+        countItem: Int, page: Int
     ): ApiResponse<PhotoDataList> {
-        return request { api.getSearchPhoto(query,countItem,page) }
+        return request { api.getSearchPhoto(query, countItem, page) }
     }
 
     private suspend fun getPhotosDao(orderBy: String): List<PhotoEntity> {
@@ -47,7 +49,7 @@ class PhotoRepository @Inject constructor(
         photoDao.insertPhoto(photoData)
     }
 
-    suspend fun clearPhotos(){
+    suspend fun clearPhotos() {
         photoDao.clearPhotos()
     }
 

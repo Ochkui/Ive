@@ -30,22 +30,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAppDataBase(@ApplicationContext context: Context): AppDataBase{
-        return Room.databaseBuilder(
-            context.applicationContext,
-            AppDataBase::class.java,
-            "app_database"
-        ).build()
-    }
-
-    @Provides
-    @Singleton
-    fun providePhotoDao(dataBase: AppDataBase): PhotoDao {
-        return dataBase.photoDao()
-    }
-
-    @Provides
-    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BuildConfig.BASE_URL)

@@ -17,18 +17,6 @@ fun Fragment.toast(massage:String){
     Toast.makeText(context,massage, Toast.LENGTH_SHORT).show()
 }
 
-
-inline fun <reified T : Parcelable> Fragment.getParcel(key:String): T? {
-
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        arguments?.getParcelable(key,T::class.java)
-    } else {
-        @Suppress("DEPRECATION")
-        arguments?.getParcelable(key)
-    }
-
-}
-
 fun Fragment.hideStatusBar() = with(requireActivity()) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         window.insetsController?.let {

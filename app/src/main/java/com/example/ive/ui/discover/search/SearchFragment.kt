@@ -80,7 +80,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             viewModel.getPhotos(request, true)
         }
     }
-    // todo improve
+
     private fun hideKeyboard(view: View) {
         val inputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

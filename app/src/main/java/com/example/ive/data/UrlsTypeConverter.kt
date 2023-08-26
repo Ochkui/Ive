@@ -1,4 +1,4 @@
-package com.example.ive.utils
+package com.example.ive.data
 
 import androidx.room.TypeConverter
 import com.example.ive.network.model.Urls

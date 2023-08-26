@@ -12,19 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
-    override fun initViews() {
-//        binding.vUserProf.setViewData(
-//            UserProfileViewData(
-//                R.drawable.profile_dev,
-//                "Mails",
-//                "developer"
-//            )
-//        )
-    }
-
     override fun initListeners() {
         with(binding) {
-//            navigate(StartFragmentDirections.showLogin())
             btnLogin.setOnClickListener { navigate(R.id.show_login) }
             btnReg.setOnClickListener { navigate(R.id.show_registration) }
         }

@@ -8,25 +8,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.ive.component.model.UserProfileViewData
 import com.example.ive.databinding.ViewUserProfileBinding
 
-class UserProfileView(
+class UserProfileView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet?,
-    defStyleAttr: Int,
-    desStyleRes: Int
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    desStyleRes: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr, desStyleRes) {
 
     private var binding: ViewUserProfileBinding =
         ViewUserProfileBinding.inflate(LayoutInflater.from(context), this, true)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
-        context,
-        attrs,
-        defStyleAttr,
-        0
-    )
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context) : this(context, null)
 
     fun setViewData(userProfile: UserProfileViewData) {
         binding.viewData = userProfile
