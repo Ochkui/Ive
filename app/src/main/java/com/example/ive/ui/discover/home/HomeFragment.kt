@@ -1,6 +1,7 @@
 package com.example.ive.ui.discover.home
 
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
@@ -8,12 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.ive.databinding.FragmentHomeBinding
 import com.example.ive.exstensions.showStatusBar
-import com.example.ive.exstensions.toast
 import com.example.ive.ui.adapter.NewsAdapter
 import com.example.ive.ui.adapter.PhotoAdapter
 import com.example.ive.ui.base.BaseFragment
+import com.example.ive.ui.discover.DiscoverSharedViewModel
 import com.example.ive.ui.discover.IProgressVisibility
-import com.example.ive.ui.discover.IToolbarVisibility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by viewModels()
-
+    private val sharedViewModel: DiscoverSharedViewModel by activityViewModels()
     private val adapterPhoto = PhotoAdapter(
         listener = { item -> navigate(HomeFragmentDirections.homeToPhoto(item))}
     )
@@ -33,14 +33,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     )
 
     private val iProgressBar: IProgressVisibility by lazy { activity as IProgressVisibility }
-    private val iToolbar: IToolbarVisibility by lazy { activity as IToolbarVisibility }
+
 
     override fun initObservers() {
 
-        viewModel.isConnected.observe(viewLifecycleOwner){
-            if (!it){
-                toast("No Connection!")
-            }
+        sharedViewModel.isConnected.observe(viewLifecycleOwner){
             checkNetWork(it)
         }
 
@@ -80,7 +77,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initViews() {
         showStatusBar()
-        checkNetWork(viewModel.networkChecker.isInternetAvailable())
+        checkNetWork(sharedViewModel.networkChecker.isInternetAvailable())
         iProgressBar.visibleProgress(true)
         val stLayoutManager = StaggeredGridLayoutManager(
             2, StaggeredGridLayoutManager.VERTICAL
@@ -114,11 +111,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun checkNetWork(isConnected: Boolean){
         if (!isConnected) {
-            iToolbar.toolbarVisibility(true)
             binding.btSeeMore.visibility = View.GONE
             binding.swRefresh.isEnabled = false
         } else {
-            iToolbar.toolbarVisibility(false)
             binding.btSeeMore.visibility = View.VISIBLE
             binding.swRefresh.isEnabled = true
         }
@@ -140,7 +135,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onStop() {
         super.onStop()
-        // todo improve SingleLiveEvent
         viewModel.resetState()
     }
 

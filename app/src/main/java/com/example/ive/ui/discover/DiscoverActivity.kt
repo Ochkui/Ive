@@ -3,11 +3,13 @@ package com.example.ive.ui.discover
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.ive.R
 import com.example.ive.databinding.DiscaverActivityBinding
+import com.example.ive.exstensions.toast
 import com.example.ive.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,15 +20,33 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
 
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
+    private val sharedViewModel: DiscoverSharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
         initListeners()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        sharedViewModel.networkChecker.observe(this) {
+            if (!it) {
+                toast(R.string.no_connections)
+                toolbarVisibility(true)
+            } else {
+                toolbarVisibility(false)
+            }
+        }
     }
 
     private fun initView() {
         navigationBarVisibility(true)
+        sharedViewModel.networkChecker.isInternetAvailable().let {
+            if (!it) {
+                toolbarVisibility(true)
+            }
+        }
         setSupportActionBar(binding.myToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
@@ -74,7 +94,7 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
         }
     }
 
-    private fun itemSelectNavigation(fragment: Int) : Boolean {
+    private fun itemSelectNavigation(fragment: Int): Boolean {
         return if (navController.currentDestination?.id != fragment) {
             navController.navigate(fragment)
             true
@@ -94,11 +114,10 @@ class DiscoverActivity : BaseActivity<DiscaverActivityBinding>(), IProgressVisib
     }
 
     override fun toolbarVisibility(isVisible: Boolean) {
-        if (isVisible){
+        if (isVisible) {
             binding.myToolbar.visibility = View.VISIBLE
         } else {
             binding.myToolbar.visibility = View.GONE
         }
     }
-
 }

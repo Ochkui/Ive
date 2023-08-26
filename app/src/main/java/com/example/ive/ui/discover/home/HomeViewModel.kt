@@ -7,12 +7,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.example.ive.component.model.DataNews
 import com.example.ive.network.ApiResponse
 import com.example.ive.network.PhotoNewsPagingSource
 import com.example.ive.network.model.toDataNews
-import com.example.ive.network.model.toPhotoData
 import com.example.ive.network.model.toPhotoEntity
 import com.example.ive.repository.PhotoRepository
 import com.example.ive.utils.NetworkChecker
@@ -32,7 +30,6 @@ class HomeViewModel @Inject constructor(
         object Loading : UiState()
         object None : UiState()
     }
-    var isConnected = networkChecker
 
     private val _popular = MutableLiveData<List<DataNews>>()
     val popular: LiveData<List<DataNews>> = _popular
@@ -67,7 +64,6 @@ class HomeViewModel @Inject constructor(
             config = PagingConfig(pageSize = pageSize),
             pagingSourceFactory = { pagingSource }
         ).flow
-//            .cachedIn(viewModelScope)
     }
 
     fun getPhotoPopular(){
@@ -80,8 +76,6 @@ class HomeViewModel @Inject constructor(
                 page = currentPage,
             )) {
                 is ApiResponse.Error -> {
-//                    _popular.postValue(photoRepository.getPhotosDao(ORDER_BY_POPULAR).map {
-//                        it.toPhotoData().toDataNews() })
                     _uiState.postValue(UiState.Error(result.error))
                 }
                 is ApiResponse.Success -> {
@@ -114,7 +108,6 @@ class HomeViewModel @Inject constructor(
     companion object{
         const val PAGE_SIZE = 5
         const val ORDER_BY_POPULAR = "popular"
-        const val ORDER_BY_LATEST = "latest"
     }
 
 }

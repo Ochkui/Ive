@@ -1,6 +1,7 @@
 package com.example.ive.ui.discover.photo
 
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.ive.R
 import com.example.ive.component.model.DataNews
@@ -8,7 +9,9 @@ import com.example.ive.databinding.FragmentPhotoBinding
 import com.example.ive.exstensions.hideStatusBar
 import com.example.ive.ui.base.BaseFragment
 import com.example.ive.ui.discover.DiscoverActivity
+import com.example.ive.ui.discover.DiscoverSharedViewModel
 import com.example.ive.ui.discover.INavigationBarVisibility
+import com.example.ive.ui.discover.IToolbarVisibility
 import com.squareup.picasso.Picasso
 
 class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
@@ -17,12 +20,15 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
     private lateinit var photo: DataNews
 
     private val args: PhotoFragmentArgs by navArgs()
+    private val iToolbar: IToolbarVisibility by lazy { activity as IToolbarVisibility }
+    private val sharedViewModel: DiscoverSharedViewModel by activityViewModels()
 
     override fun initViews() {
         hideStatusBar()
+        iToolbar.toolbarVisibility(false)
         visibilityNavBar.navigationBarVisibility(false)
         photo = args.dataNews
-// todo improve
+
         Picasso.get()
             .load(photo.imageUrls)
             .into(binding.ibImage)
@@ -44,6 +50,13 @@ class PhotoFragment: BaseFragment<FragmentPhotoBinding>() {
                 PhotoFragmentDirections.photoToProfile(photo)
             )
             (activity as DiscoverActivity).navigateToMenu(R.id.profileFragment)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (!sharedViewModel.networkChecker.isInternetAvailable()){
+            iToolbar.toolbarVisibility(true)
         }
     }
 
