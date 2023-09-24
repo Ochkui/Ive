@@ -8,9 +8,9 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-def apiKeysFail = rootProject.file("local.properties")
+def apiKeysFile = rootProject.file("local.properties")
 def apiKeys = new Properties()
-apiKeys.load(new FileInputStream(apiKeysFail))
+apiKeys.load(new FileInputStream(apiKeysFile))
 
 
 android {
